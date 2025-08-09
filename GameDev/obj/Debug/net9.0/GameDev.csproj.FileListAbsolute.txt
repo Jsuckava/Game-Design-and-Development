@@ -1,0 +1,14 @@
+C:\Users\johnm\Desktop\GameDev\GameDev\bin\Debug\net9.0\GameDev.exe
+C:\Users\johnm\Desktop\GameDev\GameDev\bin\Debug\net9.0\GameDev.deps.json
+C:\Users\johnm\Desktop\GameDev\GameDev\bin\Debug\net9.0\GameDev.runtimeconfig.json
+C:\Users\johnm\Desktop\GameDev\GameDev\bin\Debug\net9.0\GameDev.dll
+C:\Users\johnm\Desktop\GameDev\GameDev\bin\Debug\net9.0\GameDev.pdb
+C:\Users\johnm\Desktop\GameDev\GameDev\obj\Debug\net9.0\GameDev.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\johnm\Desktop\GameDev\GameDev\obj\Debug\net9.0\GameDev.AssemblyInfoInputs.cache
+C:\Users\johnm\Desktop\GameDev\GameDev\obj\Debug\net9.0\GameDev.AssemblyInfo.cs
+C:\Users\johnm\Desktop\GameDev\GameDev\obj\Debug\net9.0\GameDev.csproj.CoreCompileInputs.cache
+C:\Users\johnm\Desktop\GameDev\GameDev\obj\Debug\net9.0\GameDev.dll
+C:\Users\johnm\Desktop\GameDev\GameDev\obj\Debug\net9.0\refint\GameDev.dll
+C:\Users\johnm\Desktop\GameDev\GameDev\obj\Debug\net9.0\GameDev.pdb
+C:\Users\johnm\Desktop\GameDev\GameDev\obj\Debug\net9.0\GameDev.genruntimeconfig.cache
+C:\Users\johnm\Desktop\GameDev\GameDev\obj\Debug\net9.0\ref\GameDev.dll
