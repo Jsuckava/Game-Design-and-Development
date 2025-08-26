@@ -1,0 +1,41 @@
+# Unity generated
+[Ll]ibrary/
+[Tt]emp/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Mm]emoryCaptures/
+[Oo]bj/
+UserSettings/
+
+# Asset store and cache
+Assets/AssetStoreTools*
+*/.vs/
+.vs/
+.vscode/
+*.csproj
+*.sln
+*.user
+*.unityproj
+
+# Crash/Reports
+*.stacktrace
+
+# Rider/JetBrains
+.idea/
+*.iml
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Gradle/Android
+.gradle/
+*.apk
+*.aab
+ExportedObj/
+*.unitypackage
+
+# Addressables (cache)
+ServerData/
+
