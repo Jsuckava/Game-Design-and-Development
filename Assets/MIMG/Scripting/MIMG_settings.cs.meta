@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: c4818d8583181c64380219fc9f8b3ff6
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 168565
+  packageName: Manager interface mobile game
+  packageVersion: 1.0
+  assetPath: Assets/MIMG/Scripting/MIMG_settings.cs
+  uploadId: 367645

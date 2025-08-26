@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 2b94fce464e11f34e8d47e98770f701f
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 168565
+  packageName: Manager interface mobile game
+  packageVersion: 1.0
+  assetPath: Assets/MIMG/Scripting/Game/MIMG_button_game.cs
+  uploadId: 367645

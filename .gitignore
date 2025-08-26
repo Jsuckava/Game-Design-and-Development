@@ -1,0 +1,61 @@
+# =============== #
+# Unity generated #
+# =============== #
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Mm]emoryCaptures/
+UserSettings/
+MemoryCaptures/
+
+# ============== #
+# Asset Store    #
+# ============== #
+Assets/AssetStoreTools*
+
+# ============== #
+# Visual Studio  #
+# ============== #
+.vs/
+.vscode/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+
+# ============== #
+# JetBrains Rider#
+# ============== #
+.idea/
+*.iml
+
+# ============== #
+# OS Generated   #
+# ============== #
+.DS_Store
+Thumbs.db
+
+# ============== #
+# Crash Reports  #
+# ============== #
+*.stacktrace
+
+# ============== #
+# Gradle / Android
+# ============== #
+.gradle/
+*.apk
+*.aab
+*.unitypackage
+ExportedObj/
+
+# ============== #
+# Addressables   #
+# ============== #
+ServerData/

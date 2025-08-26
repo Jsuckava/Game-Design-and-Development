@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: c62d7a755cd26da49841f7143b7549e6
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 168565
+  packageName: Manager interface mobile game
+  packageVersion: 1.0
+  assetPath: Assets/MIMG/Demo/Scripts/GAME_MENU.cs
+  uploadId: 367645
