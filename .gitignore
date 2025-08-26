@@ -1,41 +1,61 @@
-# Unity generated
+# =============== #
+# Unity generated #
+# =============== #
 [Ll]ibrary/
 [Tt]emp/
+[Oo]bj/
 [Bb]uild/
 [Bb]uilds/
 [Ll]ogs/
 [Mm]emoryCaptures/
-[Oo]bj/
 UserSettings/
+MemoryCaptures/
 
-# Asset store and cache
+# ============== #
+# Asset Store    #
+# ============== #
 Assets/AssetStoreTools*
-*/.vs/
+
+# ============== #
+# Visual Studio  #
+# ============== #
 .vs/
 .vscode/
 *.csproj
-*.sln
-*.user
 *.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
 
-# Crash/Reports
-*.stacktrace
-
-# Rider/JetBrains
+# ============== #
+# JetBrains Rider#
+# ============== #
 .idea/
 *.iml
 
-# OS junk
+# ============== #
+# OS Generated   #
+# ============== #
 .DS_Store
 Thumbs.db
 
-# Gradle/Android
+# ============== #
+# Crash Reports  #
+# ============== #
+*.stacktrace
+
+# ============== #
+# Gradle / Android
+# ============== #
 .gradle/
 *.apk
 *.aab
-ExportedObj/
 *.unitypackage
+ExportedObj/
 
-# Addressables (cache)
+# ============== #
+# Addressables   #
+# ============== #
 ServerData/
-
