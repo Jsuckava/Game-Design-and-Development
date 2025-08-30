@@ -1,26 +1,14 @@
-# =============== #
-# Unity generated #
-# =============== #
+# --- Unity / OS
 [Ll]ibrary/
 [Tt]emp/
-[Oo]bj/
 [Bb]uild/
 [Bb]uilds/
 [Ll]ogs/
+[Oo]bj/
 [Mm]emoryCaptures/
 UserSettings/
-MemoryCaptures/
-
-# ============== #
-# Asset Store    #
-# ============== #
-Assets/AssetStoreTools*
-
-# ============== #
-# Visual Studio  #
-# ============== #
+.gradle/
 .vs/
-.vscode/
 *.csproj
 *.unityproj
 *.sln
@@ -28,34 +16,37 @@ Assets/AssetStoreTools*
 *.tmp
 *.user
 *.userprefs
-
-# ============== #
-# JetBrains Rider#
-# ============== #
-.idea/
-*.iml
-
-# ============== #
-# OS Generated   #
-# ============== #
-.DS_Store
-Thumbs.db
-
-# ============== #
-# Crash Reports  #
-# ============== #
-*.stacktrace
-
-# ============== #
-# Gradle / Android
-# ============== #
-.gradle/
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+*.pidb.meta
 *.apk
 *.aab
-*.unitypackage
-ExportedObj/
 
-# ============== #
-# Addressables   #
-# ============== #
-ServerData/
+# --- Crash/Profiler
+*.stackdump
+*.dmp
+
+# --- Rider / VS Code
+.idea/
+.project/
+.classpath
+.c9/
+*.launch
+.settings/
+.vscode/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+
+# --- Unity auto-generated
+*.unitypackage
+
+# --- Addressables & Cache
+/[Aa]ssets/AddressableAssetsData/*/*.bin*
+/[Aa]ssets/StreamingAssets/aa/*
