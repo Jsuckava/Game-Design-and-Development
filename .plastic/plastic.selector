@@ -1,4 +1,0 @@
-repository "Game Development and Design/Game-Design-and-Development@18967855253784@cloud"
-  path "/"
-    br "/main"
-    co "/main"
