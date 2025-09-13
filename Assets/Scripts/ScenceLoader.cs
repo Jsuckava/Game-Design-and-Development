@@ -3,6 +3,7 @@ using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using JetBrains.Annotations;
 
 public class ScenceLoader : MonoBehaviour
 {
@@ -17,6 +18,9 @@ public class ScenceLoader : MonoBehaviour
 #else
         Application.Quit();
 #endif
-
+    
+    }
+    public void GoBack() {
+        SceneManager.LoadSceneAsync(2);
     }
 }

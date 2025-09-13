@@ -62,48 +62,139 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\MIMG\Demo\Scripts\ButtonStick.cs" />
+    <Compile Include="Assets\IsoTools\Examples\Scripts\Simple\CircleFly.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
+    <Compile Include="Assets\IsoTools\Scripts\Internal\IsoMinMax.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
+    <Compile Include="Assets\IsometricElfFreeVer\scripts\PlayerManager.cs" />
     <Compile Include="Assets\MIMG\Scripting\Game\MIMG_game.cs" />
+    <Compile Include="Assets\IsoTools\Scripts\Internal\IsoBehaviour.cs" />
+    <Compile Include="Assets\IsoTools\Examples\Scripts\Kenney\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\HitObject.cs" />
     <Compile Include="Assets\MIMG\Scripting\MIMG_settings.cs" />
+    <Compile Include="Assets\IsoTools\Addons\Physics\Internal\IsoFakeObject.cs" />
+    <Compile Include="Assets\IsoTools\Addons\PlayMaker\Actions\IsoIsKinematic.cs" />
+    <Compile Include="Assets\IsoTools\Addons\PlayMaker\Actions\IsoSetSize.cs" />
+    <Compile Include="Assets\IsoTools\Scripts\Internal\IsoList.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
     <Compile Include="Assets\MIMG\Demo\Scripts\Human.cs" />
+    <Compile Include="Assets\IsoTools\Examples\Scripts\Dragosha\CloudController.cs" />
+    <Compile Include="Assets\IsoTools\Scripts\IsoObject.cs" />
     <Compile Include="Assets\MIMG\Demo\Scripts\CharacterController2D.cs" />
+    <Compile Include="Assets\IsoTools\Addons\PlayMaker\Actions\IsoAddExplosionForce.cs" />
+    <Compile Include="Assets\IsoTools\Addons\PlayMaker\Actions\IsoSetVelocity.cs" />
+    <Compile Include="Assets\IsoTools\Scripts\Internal\IsoRect.cs" />
+    <Compile Include="Assets\IsoTools\Addons\PlayMaker\Actions\IsoGetRenderersMode.cs" />
+    <Compile Include="Assets\IsoTools\Addons\Physics\IsoBoxCollider.cs" />
+    <Compile Include="Assets\IsoTools\Addons\PlayMaker\Events\IsoCollisionEvent.cs" />
+    <Compile Include="Assets\IsoTools\Addons\PlayMaker\Actions\IsoSetPosition.cs" />
+    <Compile Include="Assets\IsoTools\Addons\PlayMaker\Actions\IsoResize.cs" />
+    <Compile Include="Assets\IsometricElfFreeVer\scripts\PotionManager.cs" />
+    <Compile Include="Assets\IsoTools\Addons\Physics\IsoPhysics.cs" />
+    <Compile Include="Assets\IsoTools\Addons\PlayMaker\Actions\IsoGetWorldProps.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
+    <Compile Include="Assets\IsometricElfFreeVer\scripts\ArrowManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
+    <Compile Include="Assets\IsoTools\Addons\Physics\Internal\IsoFakeRigidbody.cs" />
+    <Compile Include="Assets\IsoTools\Addons\PlayMaker\Actions\IsoIsUseGravity.cs" />
+    <Compile Include="Assets\IsoTools\Addons\PlayMaker\Actions\IsoTranslate.cs" />
+    <Compile Include="Assets\Scripts\StepOnActiveTile.cs" />
     <Compile Include="Assets\MIMG\Scripting\Game\MIMG_button_game.cs" />
+    <Compile Include="Assets\IsoTools\Addons\PlayMaker\Actions\IsoSetUseGravity.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
+    <Compile Include="Assets\IsometricElfFreeVer\scripts\StoneManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
+    <Compile Include="Assets\IsoTools\Addons\PlayMaker\Actions\IsoSetRenderersMode.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
+    <Compile Include="Assets\IsoTools\Addons\PlayMaker\Actions\IsoSetWorldProps.cs" />
+    <Compile Include="Assets\IsoTools\Addons\PlayMaker\Actions\IsoWakeUp.cs" />
+    <Compile Include="Assets\IsoTools\Addons\PlayMaker\Internal\IsoFSMEvents.cs" />
+    <Compile Include="Assets\IsoTools\Examples\Scripts\Dragosha\PlayerController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SkewTextExample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
+    <Compile Include="Assets\IsoTools\Addons\PlayMaker\Actions\IsoGetMass.cs" />
+    <Compile Include="Assets\IsoTools\Addons\PlayMaker\Actions\IsoGetPosition.cs" />
+    <Compile Include="Assets\IsoTools\Addons\Physics\Internal\IsoFakeCollider.cs" />
+    <Compile Include="Assets\IsoTools\Addons\PlayMaker\Actions\IsoGetMouseIsoPosition.cs" />
+    <Compile Include="Assets\IsoTools\Addons\Physics\IsoCollisionListener.cs" />
+    <Compile Include="Assets\IsoTools\Scripts\Internal\IsoSortingSolver.cs" />
+    <Compile Include="Assets\IsoTools\Scripts\Internal\IsoPool.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
+    <Compile Include="Assets\IsoTools\Addons\PlayMaker\Actions\IsoSetIsKinematic.cs" />
+    <Compile Include="Assets\IsoTools\Addons\PlayMaker\Actions\IsoGetSpeed.cs" />
+    <Compile Include="Assets\IsoTools\Addons\Physics\Internal\IsoPhysicsHelperHolder.cs" />
+    <Compile Include="Assets\IsoTools\Addons\PlayMaker\Actions\IsoAddForce.cs" />
+    <Compile Include="Assets\IsoTools\Scripts\Internal\IsoAssocList.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
+    <Compile Include="Assets\IsoTools\Addons\PlayMaker\Actions\IsoGetVelocity.cs" />
+    <Compile Include="Assets\IsoTools\Addons\PlayMaker\Internal\IsoComponentAction.cs" />
+    <Compile Include="Assets\IsoTools\Addons\PlayMaker\Actions\IsoGetTilePosition.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SimpleScript.cs" />
+    <Compile Include="Assets\IsometricElfFreeVer\scripts\ShotController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark04.cs" />
     <Compile Include="Assets\MIMG\Demo\Scripts\GAME_MENU.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ChatController.cs" />
+    <Compile Include="Assets\IsoTools\Addons\Physics\IsoRigidbody.cs" />
+    <Compile Include="Assets\IsoTools\Addons\PlayMaker\Actions\IsoConvertIsometricToScreen.cs" />
+    <Compile Include="Assets\IsoTools\Addons\Physics\IsoContactPoint.cs" />
+    <Compile Include="Assets\IsoTools\Addons\Physics\Internal\IsoPhysicsUtils.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_DigitValidator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_FrameRateCounter.cs" />
+    <Compile Include="Assets\IsoTools\Addons\PlayMaker\Actions\IsoGetSize.cs" />
+    <Compile Include="Assets\IsoTools\Addons\Physics\Internal\IsoFakeTriggerListener.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
+    <Compile Include="Assets\IsoTools\Examples\Scripts\Kenney\AlienDestroyer.cs" />
+    <Compile Include="Assets\IsoTools\Addons\PlayMaker\Actions\IsoGetDrag.cs" />
+    <Compile Include="Assets\IsoTools\Scripts\Internal\IsoObjectBase.cs" />
     <Compile Include="Assets\MIMG\Scripting\MIMG_button.cs" />
+    <Compile Include="Assets\IsoTools\Examples\Scripts\Kenney\AlienBallSpawner.cs" />
+    <Compile Include="Assets\IsoTools\Addons\PlayMaker\Actions\IsoGetTouchIsoTilePosition.cs" />
+    <Compile Include="Assets\IsoTools\Scripts\IsoParent.cs" />
+    <Compile Include="Assets\IsoTools\Scripts\Internal\IsoScreenSolver.cs" />
+    <Compile Include="Assets\IsoTools\Addons\PlayMaker\Actions\IsoSetMass.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
     <Compile Include="Assets\Scripts\ScenceLoader.cs" />
+    <Compile Include="Assets\IsoTools\Scripts\Internal\IsoPoint2.cs" />
+    <Compile Include="Assets\IsoTools\Addons\Physics\Internal\IsoPhysicsHelper.cs" />
+    <Compile Include="Assets\IsoTools\Addons\Physics\IsoRaycastHit.cs" />
+    <Compile Include="Assets\IsoTools\Addons\PlayMaker\Actions\IsoGetMouseIsoTilePosition.cs" />
+    <Compile Include="Assets\IsoTools\Examples\Scripts\Kenney\PhysicEchoListener.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexColorCycler.cs" />
+    <Compile Include="Assets\IsoTools\Addons\Physics\IsoCollision.cs" />
+    <Compile Include="Assets\IsoTools\Scripts\Internal\IsoQuadTree.cs" />
+    <Compile Include="Assets\IsoTools\Scripts\Internal\IsoUtils.cs" />
+    <Compile Include="Assets\IsoTools\Examples\Scripts\Kenney\AlienBallController.cs" />
+    <Compile Include="Assets\IsoTools\Addons\PlayMaker\Actions\IsoSleep.cs" />
+    <Compile Include="Assets\IsoTools\Addons\PlayMaker\Actions\IsoConvertScreenToIsometric.cs" />
+    <Compile Include="Assets\IsoTools\Addons\PlayMaker\Events\IsoTriggerEvent.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ObjectSpin.cs" />
+    <Compile Include="Assets\Scripts\ObjectMover.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />
     <Compile Include="Assets\MIMG\Demo\Scripts\ButtonDown.cs" />
+    <Compile Include="Assets\IsoTools\Scripts\IsoWorld.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextConsoleSimulator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TeleType.cs" />
+    <Compile Include="Assets\IsoTools\Addons\PlayMaker\Actions\IsoSetDrag.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
+    <Compile Include="Assets\IsoTools\Scripts\Internal\IsoWorldBase.cs" />
+    <Compile Include="Assets\IsoTools\Examples\Scripts\SceneController.cs" />
+    <Compile Include="Assets\IsoTools\Addons\Physics\IsoSphereCollider.cs" />
+    <Compile Include="Assets\IsoTools\Addons\Physics\IsoTriggerListener.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
+    <Compile Include="Assets\IsoTools\Addons\PlayMaker\Actions\IsoGetTouchIsoPosition.cs" />
+    <Compile Include="Assets\IsoTools\Addons\Physics\IsoCapsuleCollider.cs" />
+    <Compile Include="Assets\IsoTools\Addons\Physics\IsoCollider.cs" />
+    <Compile Include="Assets\IsoTools\Addons\Physics\Internal\IsoFakeCollisionListener.cs" />
+    <Compile Include="Assets\IsoTools\Scripts\Internal\IsoWarningSolver.cs" />
+    <Compile Include="Assets\IsoTools\Addons\PlayMaker\Actions\IsoIsSleeping.cs" />
+    <Compile Include="Assets\IsoTools\Examples\Scripts\Simple\CubeAutoMovement.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -111,18 +202,22 @@
     <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Roboto-Bold - License.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile-2-Pass.shader" />
     <None Include="Assets\MIMG\Resources\SchemesDefault\2.txt" />
+    <None Include="Assets\IsoTools\Examples\Images\Dragosha\adventure-tileset\spritesheet.xml" />
     <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Unity - OFL.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
     <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Oswald-Bold - OFL.txt" />
     <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Roboto-Bold - AFL.txt" />
     <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Anton OFL.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
+    <None Include="Assets\Hex World Tiles - Free\ReadMe.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
     <None Include="Assets\BayatGames\Free Platform Game Assets\Readme.txt" />
+    <None Include="Assets\IsometricElfFreeVer\Readme_en.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\SDFFunctions.hlsl" />
     <None Include="Assets\Pixel Font - Tripfive\_README.txt" />
     <None Include="Assets\MIMG\Resources\SchemesDefault\3.txt" />
+    <None Include="Assets\IsoTools\Examples\Images\Dragosha\licence.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
@@ -130,10 +225,12 @@
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
+    <None Include="Assets\IsoTools\Examples\Images\Kenney\licence.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
     <None Include="Assets\MIMG\Resources\SchemesDefault\1.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
+    <None Include="Assets\IsometricElfFreeVer\Readme_jp.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
@@ -1162,6 +1259,10 @@
       <HintPath>Library\ScriptAssemblies\Unity.2D.IK.Runtime.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Unity.Cinemachine.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.Cinemachine.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Unity.2D.SpriteShape.Runtime">
       <HintPath>Library\ScriptAssemblies\Unity.2D.SpriteShape.Runtime.dll</HintPath>
       <Private>False</Private>
@@ -1210,12 +1311,20 @@
       <HintPath>Library\ScriptAssemblies\Unity.Services.Core.Components.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Unity.Splines">
+      <HintPath>Library\ScriptAssemblies\Unity.Splines.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Unity.Mathematics.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Mathematics.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.RenderPipelines.GPUDriven.Runtime">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.GPUDriven.Runtime.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Cinemachine">
+      <HintPath>Library\ScriptAssemblies\Unity.Cinemachine.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.InternalAPIEditorBridge.001">
@@ -1252,6 +1361,10 @@
     </Reference>
     <Reference Include="Unity.RenderPipelines.Universal.Config.Runtime">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Config.Runtime.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Splines.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.Splines.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.2D.Aseprite.Common">
@@ -1324,6 +1437,10 @@
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Core.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Settings.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.Settings.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Universal.Runtime">
