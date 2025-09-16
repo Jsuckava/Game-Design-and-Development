@@ -9,11 +9,14 @@ EditorBuildSettings:
     path: Assets/Scenes/proto.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
-    path: Assets/Scenes/Level 1.unity
+    path: Assets/Scenes/Chararcter Selection 1.unity
     guid: 4f24b0c850517f34cb86737bcc2948af
   - enabled: 1
     path: Assets/Scenes/MainMenuProto.unity
     guid: 0d5c49e8da741474185c896eec9b1923
+  - enabled: 1
+    path: Assets/Scenes/GameOn 3.unity
+    guid: 6d3c3d75eb0aeab4386762456c33b808
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

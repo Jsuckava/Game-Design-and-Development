@@ -23,4 +23,12 @@ public class ScenceLoader : MonoBehaviour
     public void GoBack() {
         SceneManager.LoadSceneAsync(2);
     }
+    public void StartButton() {
+        SceneManager.LoadScene("GameOn 3");
+        Debug.Log("Starting!");
+    }
+    public void CharacterFinalization() {
+        SceneManager.LoadScene("");
+        Debug.Log("Character Selection Finalization!");
+    }
 }

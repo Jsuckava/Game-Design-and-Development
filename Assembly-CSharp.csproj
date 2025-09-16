@@ -64,6 +64,7 @@
     <Compile Include="Assets\MIMG\Demo\Scripts\ButtonStick.cs" />
     <Compile Include="Assets\IsoTools\Examples\Scripts\Simple\CircleFly.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
+    <Compile Include="Assets\Scripts\LivesManager.cs" />
     <Compile Include="Assets\IsoTools\Scripts\Internal\IsoMinMax.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
@@ -101,6 +102,7 @@
     <Compile Include="Assets\IsoTools\Addons\PlayMaker\Actions\IsoIsUseGravity.cs" />
     <Compile Include="Assets\IsoTools\Addons\PlayMaker\Actions\IsoTranslate.cs" />
     <Compile Include="Assets\Scripts\StepOnActiveTile.cs" />
+    <Compile Include="Assets\Scripts\LivesUI.cs" />
     <Compile Include="Assets\MIMG\Scripting\Game\MIMG_button_game.cs" />
     <Compile Include="Assets\IsoTools\Addons\PlayMaker\Actions\IsoSetUseGravity.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
@@ -109,6 +111,7 @@
     <Compile Include="Assets\IsoTools\Addons\PlayMaker\Actions\IsoSetRenderersMode.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
     <Compile Include="Assets\IsoTools\Addons\PlayMaker\Actions\IsoSetWorldProps.cs" />
+    <Compile Include="Assets\Scripts\SwitchCam.cs" />
     <Compile Include="Assets\IsoTools\Addons\PlayMaker\Actions\IsoWakeUp.cs" />
     <Compile Include="Assets\IsoTools\Addons\PlayMaker\Internal\IsoFSMEvents.cs" />
     <Compile Include="Assets\IsoTools\Examples\Scripts\Dragosha\PlayerController.cs" />
@@ -121,6 +124,7 @@
     <Compile Include="Assets\IsoTools\Addons\Physics\Internal\IsoFakeCollider.cs" />
     <Compile Include="Assets\IsoTools\Addons\PlayMaker\Actions\IsoGetMouseIsoPosition.cs" />
     <Compile Include="Assets\IsoTools\Addons\Physics\IsoCollisionListener.cs" />
+    <Compile Include="Assets\Scripts\ObjectMoverFor2ndPlayer.cs" />
     <Compile Include="Assets\IsoTools\Scripts\Internal\IsoSortingSolver.cs" />
     <Compile Include="Assets\IsoTools\Scripts\Internal\IsoPool.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
@@ -149,6 +153,7 @@
     <Compile Include="Assets\IsoTools\Addons\Physics\Internal\IsoFakeTriggerListener.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
+    <Compile Include="Assets\Scripts\Card.cs" />
     <Compile Include="Assets\IsoTools\Examples\Scripts\Kenney\AlienDestroyer.cs" />
     <Compile Include="Assets\IsoTools\Addons\PlayMaker\Actions\IsoGetDrag.cs" />
     <Compile Include="Assets\IsoTools\Scripts\Internal\IsoObjectBase.cs" />
@@ -160,6 +165,7 @@
     <Compile Include="Assets\IsoTools\Addons\PlayMaker\Actions\IsoSetMass.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
     <Compile Include="Assets\Scripts\ScenceLoader.cs" />
+    <Compile Include="Assets\Scripts\CharacterSelection.cs" />
     <Compile Include="Assets\IsoTools\Scripts\Internal\IsoPoint2.cs" />
     <Compile Include="Assets\IsoTools\Addons\Physics\Internal\IsoPhysicsHelper.cs" />
     <Compile Include="Assets\IsoTools\Addons\Physics\IsoRaycastHit.cs" />
@@ -184,16 +190,19 @@
     <Compile Include="Assets\IsoTools\Addons\PlayMaker\Actions\IsoSetDrag.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
     <Compile Include="Assets\IsoTools\Scripts\Internal\IsoWorldBase.cs" />
+    <Compile Include="Assets\Scripts\GameOverHandler.cs" />
     <Compile Include="Assets\IsoTools\Examples\Scripts\SceneController.cs" />
     <Compile Include="Assets\IsoTools\Addons\Physics\IsoSphereCollider.cs" />
     <Compile Include="Assets\IsoTools\Addons\Physics\IsoTriggerListener.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
+    <Compile Include="Assets\Scripts\CameraManager.cs" />
     <Compile Include="Assets\IsoTools\Addons\PlayMaker\Actions\IsoGetTouchIsoPosition.cs" />
     <Compile Include="Assets\IsoTools\Addons\Physics\IsoCapsuleCollider.cs" />
     <Compile Include="Assets\IsoTools\Addons\Physics\IsoCollider.cs" />
     <Compile Include="Assets\IsoTools\Addons\Physics\Internal\IsoFakeCollisionListener.cs" />
     <Compile Include="Assets\IsoTools\Scripts\Internal\IsoWarningSolver.cs" />
     <Compile Include="Assets\IsoTools\Addons\PlayMaker\Actions\IsoIsSleeping.cs" />
+    <Compile Include="Assets\Scripts\CameraRegister.cs" />
     <Compile Include="Assets\IsoTools\Examples\Scripts\Simple\CubeAutoMovement.cs" />
   </ItemGroup>
   <ItemGroup>
