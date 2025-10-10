@@ -17,9 +17,9 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 clock = pygame.time.Clock()
 
-CHEST_CLOSED = "🎁"
-CHEST_HALF = "🤩"
-CHEST_OPEN = "🥳"
+CHEST_CLOSED = "[ ]"
+CHEST_HALF = "...."
+CHEST_OPEN = "Bulaga!"
 
 menu_options = ["minigame1", "minigame2", "minigame3", "minigame4"]
 

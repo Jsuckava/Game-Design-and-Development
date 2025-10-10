@@ -2,6 +2,7 @@ import pygame
 import sys
 import random
 import speech_recognition as sr
+import threading
 
 pygame.init()
 
@@ -12,7 +13,7 @@ CONFIG = {
     "TITLE": "Guess the Word (Type or Voice)",
     "COLORS": {
         "bg": "White",
-        "text": "Black",
+        "text": "Black",    
         "title": "Black",
         "correct": "Green",
         "wrong": "Red",
@@ -61,6 +62,7 @@ score = 0
 game_over = False
 message = ""
 user_text = ""
+listening = False
 
 def parse_color(c):
     return pygame.Color(c) if isinstance(c, str) else c
@@ -101,16 +103,21 @@ def check_answer(answer):
         message = f"Mali ang sagot! Ang sagot mo ay: {answer}"
 
 def listen_and_check():
-    global message
+    global message, listening
+    listening = True
     with sr.Microphone() as source:
-        draw_text("Pakinggan... Sagot ka na!", font, parse_color(CONFIG["COLORS"]["text"]), WIDTH//2, HEIGHT//2, True)
-        pygame.display.update()
         try:
-            audio = recognizer.listen(source, timeout=5)
-            answer = recognizer.recognize_google(audio, language="tl-PH")
+            recognizer.adjust_for_ambient_noise(source, duration=1)
+            audio = recognizer.listen(source, timeout=5, phrase_time_limit=5)
+            answer = recognizer.recognize_google(audio, language="fil-PH")
             check_answer(answer)
-        except:
-            message = "Hindi narinig ang sagot!"
+        except Exception as e:
+            message = f"Error: {e}"
+    listening = False
+
+def start_listening():
+    thread = threading.Thread(target=listen_and_check, daemon=True)
+    thread.start()
 
 def draw_game(mouse_pos):
     win.fill(parse_color(CONFIG["COLORS"]["bg"]))
@@ -128,7 +135,10 @@ def draw_game(mouse_pos):
         button_rect = pygame.Rect(*CONFIG["LAYOUT"]["button_rect"])
         color = parse_color(CONFIG["COLORS"]["button_hover"]) if button_rect.collidepoint(mouse_pos) else parse_color(CONFIG["COLORS"]["button"])
         pygame.draw.rect(win, color, button_rect, border_radius=8)
-        draw_text("Sagutin Gamit and Boses", font, parse_color(CONFIG["COLORS"]["text"]), button_rect.centerx, button_rect.centery, True)
+        draw_text("Sagutin Gamit ang Boses", font, parse_color(CONFIG["COLORS"]["text"]), button_rect.centerx, button_rect.centery, True)
+
+        if listening:
+            draw_text("Nakikinig...", font, parse_color(CONFIG["COLORS"]["wrong"]), WIDTH//2, HEIGHT//2 + 120, True)
     else:
         draw_text(message, big_font, parse_color(CONFIG["COLORS"]["wrong"]), WIDTH//2, HEIGHT//2 - 50, True)
         draw_text(f"Final Score: {score}", big_font, parse_color(CONFIG["COLORS"]["correct"]), WIDTH//2, HEIGHT//2 + 50, True)
@@ -151,5 +161,5 @@ while True:
                     user_text += event.unicode
             if event.type == pygame.MOUSEBUTTONDOWN:
                 button_rect = pygame.Rect(*CONFIG["LAYOUT"]["button_rect"])
-                if button_rect.collidepoint(event.pos):
-                    listen_and_check()
+                if button_rect.collidepoint(event.pos) and not listening:
+                    start_listening()

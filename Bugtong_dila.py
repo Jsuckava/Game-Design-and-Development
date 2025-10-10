@@ -24,7 +24,8 @@ BUGTONGDILAA = [
     "Minimithi kong mapabilang sa piling ng mga piling Pilipino",
     "Ang relo ni Leroy ay rolex",
     "Pasko paksiw pa",
-    "Pritong isda, isda'ng prito"
+    "Pritong isda, isda'ng prito",
+    "Tangina mo"
 ]
 
 current_twister = random.choice(BUGTONGDILAA)
@@ -71,3 +72,4 @@ while True:
                     message = f"Mali!: {heard}" if heard else "Pauulit Pwede?"
 
     clock.tick(30)
+    
