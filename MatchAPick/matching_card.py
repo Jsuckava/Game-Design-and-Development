@@ -6,7 +6,6 @@ from tkinter import messagebox
 
 from PIL import Image, ImageTk
 
-# SOUND: pygame mixer for non-blocking short SFX
 try:
     import pygame
 
@@ -15,7 +14,6 @@ try:
 except Exception:
     PYGAME_AVAILABLE = False
 
-# ----------------- Config -----------------
 rows, cols = 4, 4
 card_size = 100
 reveal_delay = 700
@@ -27,7 +25,6 @@ flip_delay = 10
 base_dir = os.path.dirname(__file__)
 asset_dir = os.path.join(base_dir, "assets")
 
-# Face image assets (at least (rows*cols)//2 of these)
 assets = [
     os.path.join(asset_dir, "7.png"),
     os.path.join(asset_dir, "8.png"),
@@ -44,13 +41,12 @@ assets = [
 ]
 card_back = os.path.join(asset_dir, "back.png")
 
-# Sound filenames expected in assets/
 SND_FLIP = os.path.join(asset_dir, "flip.mp3")
 SND_MATCH = os.path.join(asset_dir, "match.mp3")
 SND_MISMATCH = os.path.join(asset_dir, "mismatch.mp3")
 SND_WIN = os.path.join(asset_dir, "win.mp3")
 SND_LOSE = os.path.join(asset_dir, "lose.mp3")
-SND_TICK = os.path.join(asset_dir, "tick.wav")  # optional per-second tick
+SND_TICK = os.path.join(asset_dir, "tick.wav")
 
 pairs_needed = (rows * cols) // 2
 if len(assets) < pairs_needed:
@@ -65,7 +61,7 @@ class MemoryGame:
         self._flip_frame_cache = {}
 
         # sound control
-        self.sound_enabled = True  # toggle this to mute/unmute
+        self.sound_enabled = True  # toggle to mute/unmute
         self.sounds = {}
         self._init_sounds()
 
@@ -104,7 +100,7 @@ class MemoryGame:
         self.timer_running = False
         self.timer_after_id = None
 
-        # Topbar UI
+        # topbar UI
         self.topbar = tk.Frame(root)
         self.topbar.pack(fill="x", pady=6)
         self.moves_label = tk.Label(
@@ -145,7 +141,6 @@ class MemoryGame:
         self._build_board()
         self.root.after(800, self._show_then_hide)
 
-    # ---------------- Sound helpers ----------------
     def _init_sounds(self):
         """Try to initialize pygame.mixer and load all SFX if available."""
         if not PYGAME_AVAILABLE:
@@ -167,7 +162,6 @@ class MemoryGame:
         self.sounds["lose"] = try_load(SND_LOSE)
         self.sounds["tick"] = try_load(SND_TICK)
 
-        # set sensible default volumes (0.0 - 1.0)
         for k, s in self.sounds.items():
             if s:
                 s.set_volume(0.8)
@@ -195,7 +189,6 @@ class MemoryGame:
             except Exception:
                 pass
 
-    # ----------------- Utilities -----------------
     def _format_time(self, sec):
         return time.strftime("%M:%S", time.gmtime(max(0, int(sec))))
 
@@ -249,7 +242,6 @@ class MemoryGame:
 
         schedule_frame(0)
 
-    # ----------------- Setup / Board -----------------
     def _create_new_deck(self):
         pool = list(range(pairs_needed))
         deck = pool + pool
@@ -324,7 +316,6 @@ class MemoryGame:
         af = self.root.after(1500, hide_all)
         self.scheduled_after_ids.append(af)
 
-    # ----------------- Core gameplay -----------------
     def on_card_click(self, idx):
         if self.locked:
             return
@@ -333,12 +324,10 @@ class MemoryGame:
         if not self.timer_running:
             self.start_timer()
 
-        # optimistic mark
         self.card_states[idx] = "revealed"
         self.flipped_indices.append(idx)
 
         def after_reveal():
-            # if two cards revealed, schedule check
             if len(self.flipped_indices) == 2:
                 self.locked = True
                 af = self.root.after(reveal_delay, self._check_pending_pair)
@@ -346,7 +335,6 @@ class MemoryGame:
             else:
                 self.locked = False
 
-        # animate flip to shown (plays flip sound in animate_flip)
         self.animate_flip(idx, to_revealed=True, on_complete=after_reveal)
 
     def _check_pending_pair(self):
@@ -365,7 +353,6 @@ class MemoryGame:
         self.moves_label.config(text=f"moves: {self.moves}".lower())
 
         if self.deck[a] == self.deck[b]:
-            # match sound + keep revealed
             self.play_sound("match")
             self.card_states[a] = "matched"
             self.card_states[b] = "matched"
@@ -378,10 +365,8 @@ class MemoryGame:
             self.flipped_indices.clear()
             self.locked = False
             if self.matched_pairs == pairs_needed:
-                # small delay before win sound + dialog
                 self.root.after(200, self._win)
         else:
-            # mismatch sound and animate both back to hide
             self.play_sound("mismatch")
             remaining = {"count": 2}
 
@@ -397,19 +382,14 @@ class MemoryGame:
             self.animate_flip(a, to_revealed=False, on_complete=make_cb())
             self.animate_flip(b, to_revealed=False, on_complete=make_cb())
 
-    # ----------------- Timer & End -----------------
     def start_timer(self):
         if self.timer_running:
             return
         self.timer_running = True
-        # optional: play tick sound each second
         self._tick_timer()
 
     def _tick_timer(self):
-        # update label
         self.timer_label.config(text=f"time: {self._format_time(self.time_left)}".lower())
-        # optional tick sound (comment out if annoying)
-        # self.play_sound("tick")
 
         if self.time_left <= 0:
             self.timer_running = False
@@ -446,7 +426,6 @@ class MemoryGame:
         ):
             self.restart()
 
-    # ----------------- Restart -----------------
     def restart(self):
         # stop any scheduled callbacks and sounds then rebuild
         self._clear_scheduled()
