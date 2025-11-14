@@ -5,33 +5,62 @@ public class BuildTileController : MonoBehaviour
     public float baseEnergyCost = 15f; 
     private const float CARPENTER_MULTIPLIER = 0.5f;
 
+    private BahayKuboTracker bahayKuboTracker;
+    private PopupController popupController;
+
+    void Start()
+    {
+        bahayKuboTracker = FindFirstObjectByType<BahayKuboTracker>();
+        popupController = FindFirstObjectByType<PopupController>();
+    }
+
     public void StartBuilding(GameObject player)
     {
         PlayerStats playerStats = player.GetComponent<PlayerStats>();
         if (playerStats == null)
         {
-            Debug.LogError("PlayerStats component not found on the player!");
+            Debug.LogError("PlayerStats component not found!");
             return;
         }
 
         float finalEnergyCost = baseEnergyCost;
-        
-        if (playerStats.GetActiveAbility() == AbilityType.Carpenter)
+        if (playerStats.CheckAbility() == AbilityType.Carpenter)
         {
             finalEnergyCost *= CARPENTER_MULTIPLIER;
-            Debug.Log("Carpenter Ability: Energy cost reduced!");
-            
-            playerStats.ConsumeAbility(); 
         }
         
-        if (playerStats.currentEnergy >= finalEnergyCost)
+        if (playerStats.currentEnergy < finalEnergyCost)
         {
-            playerStats.ChangeEnergy(-finalEnergyCost);
-            Debug.Log(player.name + " successfully built a part of the Bahay Kubo.");
+            popupController.ShowSimplePopup("Not Enough Energy!", "You need " + finalEnergyCost + " energy to build.");
+            return;
+        }
+
+        string partBuilt = bahayKuboTracker.AttemptBuild(playerStats);
+
+        if (partBuilt == "Complete")
+        {
+            popupController.ShowSimplePopup("All Done!", "The BahayKubo is finished!");
+        }
+        else if (partBuilt == "NotEnoughBamboo")
+        {
+            popupController.ShowSimplePopup("Not Enough Materials!", $"You need {bahayKuboTracker.haligi_bambooCost} Bamboo to build the Haligi.");
+        }
+        else if (partBuilt == "NotEnoughHardwood")
+        {
+            popupController.ShowSimplePopup("Not Enough Materials!", $"You need {bahayKuboTracker.sahig_hardwoodCost} Hardwood to build the Sahig.");
+        }
+        else if (partBuilt == "NotEnoughSawali")
+        {
+            popupController.ShowSimplePopup("Not Enough Materials!", $"You need {bahayKuboTracker.pader_sawaliCost} Sawali to build the Pader.");
+        }
+        else if (partBuilt == "NotEnoughNipa")
+        {
+            popupController.ShowSimplePopup("Not Enough Materials!", $"You need {bahayKuboTracker.bubong_nipaCost} Nipa Leaves to build the Bubong.");
         }
         else
         {
-            Debug.Log(player.name + " does not have enough energy to build!");
+            playerStats.ChangeEnergy(-finalEnergyCost);
+            popupController.ShowSimplePopup("Part Built!", "You used " + finalEnergyCost + " energy to build the " + partBuilt + "!");
         }
     }
 }

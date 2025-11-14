@@ -3,16 +3,23 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Start
+  - WildTile
+  - DisaterTile
+  - BuildTile
+  - MiniGameTile
+  - SafeZoneTile
+  - DisasterTile
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - upper
   - Water
   - UI
-  - 
-  - 
+  - below
+  - Upper PopUP
   - 
   - 
   - 
@@ -49,6 +56,9 @@ TagManager:
     locked: 0
   - name: under
     uniqueID: 522290997
+    locked: 0
+  - name: UpperUpper
+    uniqueID: 2092288511
     locked: 0
   m_RenderingLayers:
   - Default

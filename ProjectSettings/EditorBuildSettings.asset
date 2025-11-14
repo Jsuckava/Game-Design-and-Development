@@ -5,18 +5,30 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/proto.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
-  - enabled: 1
-    path: Assets/Scenes/Chararcter Selection 1.unity
-    guid: 4f24b0c850517f34cb86737bcc2948af
   - enabled: 1
     path: Assets/Scenes/MainMenuProto.unity
     guid: 0d5c49e8da741474185c896eec9b1923
   - enabled: 1
+    path: Assets/Scenes/Chararcter Selection 1.unity
+    guid: 4f24b0c850517f34cb86737bcc2948af
+  - enabled: 1
+    path: Assets/Scenes/MainG.unity
+    guid: be5e27466083dfd4f8d89442f66ef4b6
+  - enabled: 0
     path: Assets/Scenes/GameOn 3.unity
     guid: 6d3c3d75eb0aeab4386762456c33b808
+  - enabled: 0
+    path: Assets/Scenes/Scence 1.unity
+    guid: ed4904b29efbe3c4798580749fbb79de
+  - enabled: 0
+    path: Assets/Scenes/scene 2.unity
+    guid: 52ba66c54b6cda54686e3819ee510c5b
+  - enabled: 0
+    path: Assets/Scenes/Scene 3.unity
+    guid: 7304465454aadbe4a9116520290d32b6
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

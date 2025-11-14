@@ -90,7 +90,6 @@ public class MultiPlayerSelectionOfPlayerManager : MonoBehaviour
             popoutManager.HidePanel();
         }
 
-        // Show character selection UI
         characterManager.gameObject.SetActive(true); 
         characterManager.SetUsedCharacters(selectedCharacterIndices); 
         characterManager.selectedOption = -1;
@@ -117,7 +116,6 @@ public class MultiPlayerSelectionOfPlayerManager : MonoBehaviour
         } 
         selectedCharacterIndices.Add(selectedCharacterID);
         
-        // 🚨 FIX: Use the array on the CharacterManager
         if (selectedCharacterID >= 0 && selectedCharacterID < characterManager.characterDisplays.Length)
         {
             if (characterManager.characterDisplays[selectedCharacterID] != null)
