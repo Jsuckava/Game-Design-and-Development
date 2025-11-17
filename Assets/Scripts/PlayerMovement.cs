@@ -139,7 +139,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (popupController != null)
             {
-                popupController.ShowSimplePopup("Mini-Game!", "You landed on a mini-game tile!");
+                popupController.ShowMiniGamePopup("Choose a Larong Pinoy!", stats);
                 return true; 
             }
         }

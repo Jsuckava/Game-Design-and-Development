@@ -29,6 +29,15 @@ public class PlayerStats : MonoBehaviour
     public int sawali = 0;
     private int minMaterials = 0;
 
+    private TurnManager turnManager;
+    private PopupController popupController;
+
+    void Start()
+    {
+        turnManager = FindFirstObjectByType<TurnManager>();
+        popupController = FindFirstObjectByType<PopupController>();
+    }
+
     public void Initialize(string name, int charID, float maxEnergyVal, AbilityType abilityType, Sprite sprite, int playerNum)
     {
         playerName = name;
@@ -65,6 +74,14 @@ public class PlayerStats : MonoBehaviour
         currentEnergy += amount;
         currentEnergy = Mathf.Clamp(currentEnergy, minEnergy, maxEnergy);
         Debug.Log(playerName + "'s new energy: " + currentEnergy);
+        
+        if (currentEnergy <= 0)
+        {
+            if (turnManager != null)
+            {
+                turnManager.EliminatePlayer(this);
+            }
+        }
         UpdateStatDisplay(); 
     }
 

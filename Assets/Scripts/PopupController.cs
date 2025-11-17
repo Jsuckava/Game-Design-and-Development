@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Linq;
 
 public class PopupController : MonoBehaviour
 {
@@ -10,16 +11,17 @@ public class PopupController : MonoBehaviour
     public TextMeshProUGUI titleText;
 
     [Header("Component Links")]
-    public PunishmentDeck punishmentDeck; 
+    public PunishmentDeck punishmentDeck;
 
     [Header("Card Choice")]
     public GameObject cardChoiceContainer;
-    public GameObject cardBackPrefab_Disaster; 
-    public GameObject cardBackPrefab_Wild; 
+    public GameObject cardBackPrefab_Disaster;
+    public GameObject cardBackPrefab_Wild;
+    public GameObject cardBackPrefab_MiniGame;
 
     [Header("Card Reveal")]
     public GameObject cardRevealPanel;
-    public Image revealImage; 
+    public Image revealImage;
     public TextMeshProUGUI revealTitleText;
     public TextMeshProUGUI revealDescriptionText;
     public Button revealCloseButton;
@@ -34,16 +36,16 @@ public class PopupController : MonoBehaviour
     void Start()
     {
         turnManager = FindFirstObjectByType<TurnManager>();
-        
+
         if (punishmentDeck == null)
         {
             Debug.LogError("CRITICAL ERROR: The PunishmentDeck is NOT linked in the PopupController Inspector!", this.gameObject);
         }
 
-        revealCloseButton.onClick.AddListener(ClosePopup); 
-        simpleCloseButton.onClick.AddListener(ClosePopup); 
-        
-        popupPanel.SetActive(false); 
+        revealCloseButton.onClick.AddListener(ClosePopup);
+        simpleCloseButton.onClick.AddListener(ClosePopup);
+
+        popupPanel.SetActive(false);
     }
 
     public void ShowPunishmentChoice(string title, PlayerStats player)
@@ -67,13 +69,14 @@ public class PopupController : MonoBehaviour
         {
             GameObject cardBackGO = Instantiate(cardBackPrefab_Disaster, cardChoiceContainer.transform);
             Button cardButton = cardBackGO.GetComponent<Button>();
-            cardButton.onClick.AddListener(() => {
+            cardButton.onClick.AddListener(() =>
+            {
                 OnCardSelected(punishment);
             });
         }
         popupPanel.SetActive(true);
     }
-    
+
     public void ShowMaterialChoice(string title, PlayerStats player)
     {
         currentPlayerStats = player;
@@ -95,13 +98,43 @@ public class PopupController : MonoBehaviour
         {
             GameObject cardBackGO = Instantiate(cardBackPrefab_Wild, cardChoiceContainer.transform);
             Button cardButton = cardBackGO.GetComponent<Button>();
-            cardButton.onClick.AddListener(() => {
+            cardButton.onClick.AddListener(() =>
+            {
                 OnCardSelected(material);
             });
         }
         popupPanel.SetActive(true);
     }
-    
+
+    public void ShowMiniGamePopup(string title, PlayerStats player)
+    {
+        currentPlayerStats = player;
+        titleText.text = title;
+
+        cardChoiceContainer.SetActive(true);
+        cardRevealPanel.SetActive(false);
+        simpleDescriptionText.gameObject.SetActive(false);
+        simpleCloseButton.gameObject.SetActive(false);
+
+        foreach (Transform child in cardChoiceContainer.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        List<Punishment> miniGames = punishmentDeck.GetRandomMiniGameCards(3);
+
+        foreach (var minigameCard in miniGames)
+        {
+            GameObject cardBackGO = Instantiate(cardBackPrefab_MiniGame, cardChoiceContainer.transform);
+            Button cardButton = cardBackGO.GetComponent<Button>();
+            cardButton.onClick.AddListener(() =>
+            {
+                OnCardSelected(minigameCard);
+            });
+        }
+        popupPanel.SetActive(true);
+    }
+
     public void ShowSimplePopup(string title, string description)
     {
         titleText.text = title;
@@ -120,9 +153,9 @@ public class PopupController : MonoBehaviour
         cardChoiceContainer.SetActive(false);
         simpleDescriptionText.gameObject.SetActive(false);
         simpleCloseButton.gameObject.SetActive(false);
-        
+
         cardRevealPanel.SetActive(true);
-        revealImage.sprite = punishment.cardArt; 
+        revealImage.sprite = punishment.cardArt;
         revealTitleText.text = punishment.title;
         revealDescriptionText.text = punishment.description;
 
@@ -136,7 +169,7 @@ public class PopupController : MonoBehaviour
     {
         popupPanel.SetActive(false);
         currentPlayerStats = null;
-        
+
         if (turnManager != null)
         {
             turnManager.EndTurn();
