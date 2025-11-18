@@ -12,26 +12,30 @@ public class MinigameManager : MonoBehaviour
     
 
     private PlayerStats currentPlayerStats;
+    private TurnManager turnManager;
 
     void Start()
     {
-        // popupContainer = FindFirstObjectByType<PopupController>();
+		turnManager = FindFirstObjectByType<TurnManager>();
     }
 
     public void StartXoxMinigame(PlayerStats player)
     {
+		popupContainer.gameObject.SetActive(true);
         currentPlayerStats = player;
         Instantiate(xoxMinigamePrefab, popupContainer);
     }
 
     public void StartBugtongMinigame(PlayerStats player)
     {
+		popupContainer.gameObject.SetActive(true);
         currentPlayerStats = player;
         Instantiate(bugtongMinigamePrefab, popupContainer);
     }
 
     public void StartMatchaPickerMinigame(PlayerStats player)
     {
+		popupContainer.gameObject.SetActive(true);
         currentPlayerStats = player;
         Instantiate(matchaPickerMinigamePrefab, popupContainer);
     }
@@ -42,10 +46,26 @@ public class MinigameManager : MonoBehaviour
         {
             Debug.Log("Player won.");
         }
+        else
+        {
+			Debug.Log("You Lose.");
+		}
 
         if (popupContainer.childCount > 0)
         {
             Destroy(popupContainer.GetChild(0).gameObject);
         }
+        
+        popupContainer.gameObject.SetActive(false);
+        
+        if (turnManager != null)
+        {
+			turnManager.EndTurn();
+		}
+		else
+		{
+			Debug.Log("MinigameManager could not find TurnManager to end the turn");
+		}
+		currentPlayerStats = null;
     }
 }

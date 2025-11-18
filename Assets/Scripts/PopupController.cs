@@ -3,6 +3,8 @@ using TMPro;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.Events;
+using System;
 
 public class PopupController : MonoBehaviour
 {
@@ -32,6 +34,9 @@ public class PopupController : MonoBehaviour
 
     private TurnManager turnManager;
     private PlayerStats currentPlayerStats;
+    
+    private Action<PlayerStats> storedPunishmentEvent;
+    private bool isMinigamePopup = false;
 
     void Start()
     {
@@ -52,9 +57,11 @@ public class PopupController : MonoBehaviour
     {
         currentPlayerStats = player;
         titleText.text = title;
+        isMinigamePopup = false;
 
         cardChoiceContainer.SetActive(true);
         cardRevealPanel.SetActive(false);
+        //~ xoxMinigamePrefabContainer.SetActive(false);
         simpleDescriptionText.gameObject.SetActive(false);
         simpleCloseButton.gameObject.SetActive(false);
 
@@ -81,9 +88,11 @@ public class PopupController : MonoBehaviour
     {
         currentPlayerStats = player;
         titleText.text = title;
+        isMinigamePopup = false;
 
         cardChoiceContainer.SetActive(true);
         cardRevealPanel.SetActive(false);
+        //~ xoxMinigamePrefabContainer.SetActive(false);
         simpleDescriptionText.gameObject.SetActive(false);
         simpleCloseButton.gameObject.SetActive(false);
 
@@ -110,6 +119,7 @@ public class PopupController : MonoBehaviour
     {
         currentPlayerStats = player;
         titleText.text = title;
+        isMinigamePopup = true;
 
         cardChoiceContainer.SetActive(true);
         cardRevealPanel.SetActive(false);
@@ -133,12 +143,14 @@ public class PopupController : MonoBehaviour
             });
         }
         popupPanel.SetActive(true);
+        //~ xoxMinigamePrefabContainer.SetActive(true);
     }
 
     public void ShowSimplePopup(string title, string description)
     {
         titleText.text = title;
         simpleDescriptionText.text = description;
+        isMinigamePopup = false;
 
         cardChoiceContainer.SetActive(false);
         cardRevealPanel.SetActive(false);
@@ -158,21 +170,28 @@ public class PopupController : MonoBehaviour
         revealImage.sprite = punishment.cardArt;
         revealTitleText.text = punishment.title;
         revealDescriptionText.text = punishment.description;
-
-        if (currentPlayerStats != null)
-        {
-            punishment.onPunishmentSelected.Invoke(currentPlayerStats);
-        }
+        
+        storedPunishmentEvent = punishment.onPunishmentSelected;
+        //~ if (currentPlayerStats != null)
+        //~ {
+            //~ punishment.onPunishmentSelected.Invoke(currentPlayerStats);
+        //~ }
     }
 
     private void ClosePopup()
     {
+		if (storedPunishmentEvent != null && currentPlayerStats != null){
+			storedPunishmentEvent.Invoke(currentPlayerStats);
+		}
         popupPanel.SetActive(false);
         currentPlayerStats = null;
+        storedPunishmentEvent = null;
 
         if (turnManager != null)
         {
             turnManager.EndTurn();
         }
+        
+        isMinigamePopup = false;
     }
 }   
