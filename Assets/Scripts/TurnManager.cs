@@ -2,18 +2,19 @@ using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine.UI;
+using System.Linq; 
 
 public class TurnManager : MonoBehaviour
 {
     [Header("Runtime References")]
-    public List<PlayerMovement> players = new List<PlayerMovement>();
+    private List<PlayerMovement> players = new List<PlayerMovement>();
     private List<PlayerStats> activePlayers; 
     private List<TextMeshProUGUI> playerListSlots;
 
     [Header("UI References")]
     public TextMeshProUGUI turnStatusText;
-    public Button mainRollButton;
-    public TextMeshProUGUI mainDiceResultText;
+    public Button mainRollButton; 
+    public TextMeshProUGUI mainDiceResultText; 
 
     [Header("Morality UI")]
     public Slider moralitySlider;
@@ -21,8 +22,8 @@ public class TurnManager : MonoBehaviour
     [Header("Community Morale")]
     public Slider communityMoraleSlider;
     public int communityMorale = 50;
-    private int minMorale = 0;
-    private int maxMorale = 100;
+    private const int MIN_MORALE = 0;
+    private const int MAX_MORALE = 100;
 
     [Header("Highlight Settings")]
     public Color highlightColor = Color.yellow;
@@ -34,15 +35,17 @@ public class TurnManager : MonoBehaviour
     {
         if (mainRollButton == null)
         {
-            mainRollButton = GameObject.Find("RollButton").GetComponent<Button>();
+            mainRollButton = FindFirstObjectByType<Button>();
         }
         if (mainDiceResultText == null)
         {
-            mainDiceResultText = GameObject.Find("DiceResultText").GetComponent<TextMeshProUGUI>();
+            mainDiceResultText = GameObject.Find("DiceResultText")?.GetComponent<TextMeshProUGUI>();
         }
 
         if (communityMoraleSlider != null)
         {
+            communityMoraleSlider.minValue = MIN_MORALE;
+            communityMoraleSlider.maxValue = MAX_MORALE;
             communityMoraleSlider.value = communityMorale;
         }
     }
@@ -54,43 +57,54 @@ public class TurnManager : MonoBehaviour
         playerListSlots = new List<TextMeshProUGUI>(uiSlots);
 
         currentPlayerIndex = 0;
+        
+        if (players.Count == 0 || activePlayers.Count == 0)
+        {
+            Debug.LogError("TurnManager initialized with no players!");
+            return;
+        }
 
         foreach (var player in players)
         {
-            player.AssignUI(mainRollButton, mainDiceResultText);
+            if (player != null)
+            {
+                player.AssignUI(mainRollButton, mainDiceResultText);
+            }
         }
 
-        StartTurn(activePlayers[currentPlayerIndex].playerName);
+        StartTurn(activePlayers[currentPlayerIndex]);
     }
 
     public void UpdateMoralityVisual(int moralityValue)
     {
         if (moralitySlider != null)
         {
-            moralitySlider.value = moralityValue;
+            moralitySlider.value = moralityValue; 
         }
     }
 
-    private void StartTurn(string playerName)
+    private void StartTurn(PlayerStats currentPlayer)
     {
-        Debug.Log($"Starting turn for {playerName} (Player {currentPlayerIndex + 1})");
+        if (activePlayers.Count == 0) 
+        {
+            Debug.Log("Game Over: No active players left to start a turn.");
+            return;
+        }
+
+        Debug.Log($"Starting turn for {currentPlayer.playerName} (Player {currentPlayerIndex + 1})");
 
         if (turnStatusText != null)
         {
-            turnStatusText.text = $"{playerName}'s Turn to Roll!";
+            turnStatusText.text = $"{currentPlayer.playerName}'s Turn to Roll!";
         }
 
-        PlayerStats stats = activePlayers[currentPlayerIndex].GetComponent<PlayerStats>();
-        if (stats != null)
-        {
-            UpdateMoralityVisual(stats.morality);
-        }
+        UpdateMoralityVisual(currentPlayer.morality);
 
         for (int i = 0; i < playerListSlots.Count; i++)
         {
             if (playerListSlots[i] == null) continue;
 
-            if (i == currentPlayerIndex)
+            if (i == currentPlayerIndex) 
             {
                 playerListSlots[i].color = highlightColor;
             }
@@ -100,32 +114,36 @@ public class TurnManager : MonoBehaviour
             }
         }
 
-        players[currentPlayerIndex].AddButtonListener();
-        players[currentPlayerIndex].SetRollButtonInteractable(true);
+        PlayerMovement currentMovement = players[currentPlayerIndex];
+        currentMovement.AddButtonListener();
+        currentMovement.SetRollButtonInteractable(true);
     }
 
     public void EndTurn()
     {
-        if (currentPlayerIndex < activePlayers.Count)
+        if (currentPlayerIndex >= 0 && currentPlayerIndex < players.Count)
         {
             players[currentPlayerIndex].SetRollButtonInteractable(false);
             players[currentPlayerIndex].RemoveButtonListener();
         }
 
-        currentPlayerIndex++;
-        if (currentPlayerIndex >= activePlayers.Count)
-        {
-            currentPlayerIndex = 0;
-        }
+        currentPlayerIndex = (currentPlayerIndex + 1) % activePlayers.Count;
+        
+        StartTurn(activePlayers[currentPlayerIndex]);
+    }
 
-        string nextPlayerName = activePlayers[currentPlayerIndex].playerName;
-        StartTurn(nextPlayerName);
+    public void ResumeTurn()
+    {
+        if (currentPlayerIndex >= 0 && currentPlayerIndex < players.Count)
+        {
+            players[currentPlayerIndex].SetRollButtonInteractable(true);
+        }
     }
 
     public void ChangeCommunityMorale(int amount)
     {
         communityMorale += amount;
-        communityMorale = Mathf.Clamp(communityMorale, minMorale, maxMorale);
+        communityMorale = Mathf.Clamp(communityMorale, MIN_MORALE, MAX_MORALE);
 
         if (communityMoraleSlider != null)
         {
@@ -138,21 +156,31 @@ public class TurnManager : MonoBehaviour
     {
         Debug.Log($"GAME OVER for {eliminatedPlayer.playerName}!");
         
+        int eliminatedIndex = activePlayers.IndexOf(eliminatedPlayer);
+
         PlayerMovement eliminatedMovement = eliminatedPlayer.GetComponent<PlayerMovement>();
         if (eliminatedMovement != null)
         {
             players.Remove(eliminatedMovement);
         }
+        
         activePlayers.Remove(eliminatedPlayer);
         eliminatedPlayer.gameObject.SetActive(false);
+
         if (activePlayers.Count <= 1)
         {
             Debug.Log("GAME END: Only one player remaining.");
+            return;
+        }
+        
+        if (eliminatedIndex < currentPlayerIndex)
+        {
+            currentPlayerIndex--;
         }
         if (currentPlayerIndex >= activePlayers.Count)
         {
             currentPlayerIndex = 0;
         }
-        EndTurn(); 
+        StartTurn(activePlayers[currentPlayerIndex]);
     }
 }

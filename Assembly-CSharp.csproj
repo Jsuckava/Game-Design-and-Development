@@ -58,6 +58,7 @@
     <Compile Include="Assets\MIMG\Scripting\Game\MIMG_game.cs" />
     <Compile Include="Assets\Scripts\HitObject.cs" />
     <Compile Include="Assets\MIMG\Scripting\MIMG_settings.cs" />
+    <Compile Include="Assets\Scripts\BugtongManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
     <Compile Include="Assets\MIMG\Demo\Scripts\Human.cs" />
     <Compile Include="Assets\MIMG\Demo\Scripts\CharacterController2D.cs" />
@@ -66,7 +67,6 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
     <Compile Include="Assets\Scripts\TurnManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
-    <Compile Include="Assets\Scripts\StepOnActiveTile.cs" />
     <Compile Include="Assets\Scripts\LivesUI.cs" />
     <Compile Include="Assets\MIMG\Scripting\Game\MIMG_button_game.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
@@ -74,7 +74,6 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
     <Compile Include="Assets\Scripts\PopupController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
-    <Compile Include="Assets\Scripts\SwitchCam.cs" />
     <Compile Include="Assets\Scripts\CharacterDb.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SkewTextExample.cs" />

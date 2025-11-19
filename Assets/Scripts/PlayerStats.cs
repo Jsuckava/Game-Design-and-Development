@@ -7,22 +7,18 @@ public class PlayerStats : MonoBehaviour
     public TextMeshProUGUI myStatDisplay; 
     private int playerID; 
 
-    [Header("Player Info")]
     public string playerName;
     public Sprite characterSprite;
     public AbilityType ability;
     
-    [Header("Morality")]
     public int morality = 0; 
     private int minMorality = 0;
     private int maxMorality = 50;
     
-    [Header("Energy")]
     public float maxEnergy = 30f;
     public float currentEnergy;
     private float minEnergy = 0f;
 
-    [Header("Resources")]
     public int bamboo = 0; 
     public int nipaLeaves = 0;
     public int hardwood = 0;
@@ -31,11 +27,13 @@ public class PlayerStats : MonoBehaviour
 
     private TurnManager turnManager;
     private PopupController popupController;
+    private BahayKuboTracker bahayKuboTracker;
 
     void Start()
     {
         turnManager = FindFirstObjectByType<TurnManager>();
         popupController = FindFirstObjectByType<PopupController>();
+        bahayKuboTracker = FindFirstObjectByType<BahayKuboTracker>(); 
     }
 
     public void Initialize(string name, int charID, float maxEnergyVal, AbilityType abilityType, Sprite sprite, int playerNum)
@@ -53,7 +51,7 @@ public class PlayerStats : MonoBehaviour
         }
         else
         {
-            Debug.LogError("PlayerVisual SpriteRenderer is not assigned in the PlayerStats script on " + name);
+            
         }
         
         UpdateStatDisplay(); 
@@ -64,8 +62,7 @@ public class PlayerStats : MonoBehaviour
         if (myStatDisplay != null)
         {
             myStatDisplay.text = $"{playerID}: {playerName} - {ability}\n" +
-                                 $"Energy: {currentEnergy} | Morality: {morality}\n" +
-                                 $"Bamboo: {bamboo} | Nipa: {nipaLeaves} | Hardwood: {hardwood} | Sawali: {sawali}";
+                                 $"Energy: {currentEnergy} | Morality: {morality}";
         }
     }
 
@@ -73,7 +70,6 @@ public class PlayerStats : MonoBehaviour
     {
         currentEnergy += amount;
         currentEnergy = Mathf.Clamp(currentEnergy, minEnergy, maxEnergy);
-        Debug.Log(playerName + "'s new energy: " + currentEnergy);
         
         if (currentEnergy <= 0)
         {
@@ -89,7 +85,6 @@ public class PlayerStats : MonoBehaviour
     {
         morality += amount;
         morality = Mathf.Clamp(morality, minMorality, maxMorality);
-        Debug.Log(playerName + "'s new morality: " + morality);
         UpdateStatDisplay(); 
     }
 
@@ -97,24 +92,48 @@ public class PlayerStats : MonoBehaviour
     {
         bamboo += amount;
         bamboo = Mathf.Max(bamboo, minMaterials); 
+        
+        if (bahayKuboTracker != null)
+        {
+            bahayKuboTracker.AddBamboo(amount);
+        }
+        
         UpdateStatDisplay();
     }
     public void ChangeNipa(int amount)
     {
         nipaLeaves += amount;
         nipaLeaves = Mathf.Max(nipaLeaves, minMaterials); 
+        
+        if (bahayKuboTracker != null)
+        {
+            bahayKuboTracker.AddNipa(amount);
+        }
+
         UpdateStatDisplay();
     }
     public void ChangeHardwood(int amount)
     {
         hardwood += amount;
         hardwood = Mathf.Max(hardwood, minMaterials); 
+        
+        if (bahayKuboTracker != null)
+        {
+            bahayKuboTracker.AddHardwood(amount);
+        }
+        
         UpdateStatDisplay();
     }
     public void ChangeSawali(int amount)
     {
         sawali += amount;
         sawali = Mathf.Max(sawali, minMaterials); 
+        
+        if (bahayKuboTracker != null)
+        {
+            bahayKuboTracker.AddSawali(amount);
+        }
+
         UpdateStatDisplay();
     }
 
@@ -125,6 +144,6 @@ public class PlayerStats : MonoBehaviour
 
     public void ConsumeAbility()
     {
-        Debug.Log(playerName + " consumed their ability!");
+        
     }
 }

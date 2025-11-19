@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
+using System.Linq; 
 
 public class GameSceneManager : MonoBehaviour
 {
@@ -46,7 +47,7 @@ public class GameSceneManager : MonoBehaviour
             return;
         }
 
-        SpawnAllPlayers();
+        SpawnAllPlayers(); 
 
         if (disasterManager != null)
         {
@@ -63,24 +64,40 @@ public class GameSceneManager : MonoBehaviour
         }
     }
 
-   private void SpawnAllPlayers()
-   {
+    private void SpawnAllPlayers()
+    {
         Debug.Log("Spawning 4 players...");
 
         for (int i = 1; i <= 4; i++)
         {
             int selectedCharacterID = PlayerPrefs.GetInt(SelectedOptionKeyPrefix + i, 0);
             string playerName = PlayerPrefs.GetString(PlayerNameKeyPrefix + i, "Player " + i);
-            Character characterData = characterDb.GetCharacter(selectedCharacterID);
+            
+            Character characterData = characterDb.GetCharacter(selectedCharacterID); 
             
             GameObject playerObject = Instantiate(playerPawnPrefab, spawnPoints[i-1].position, Quaternion.identity); 
-            playerObject.name = $"P{i} - {playerName} ({characterData.characterName})";
+            playerObject.name = $"P{i} - {playerName} ({characterData?.characterName ?? "Default"})"; 
             
             PlayerStats stats = playerObject.GetComponent<PlayerStats>();
+            if (stats == null)
+            {
+                stats = playerObject.AddComponent<PlayerStats>();
+            }
+
             if (stats != null)
             {
                 stats.myStatDisplay = playerListSlots[i - 1]; 
-                stats.Initialize(playerName, selectedCharacterID, characterData.Energy, characterData.specialAbilityPower, characterData.characterSprite, i);
+                
+                try
+                {
+                    stats.Initialize(playerName, selectedCharacterID, characterData.Energy, characterData.specialAbilityPower, characterData.characterSprite, i);
+                }
+                catch (System.NullReferenceException)
+                {
+                    Debug.LogWarning($"Player {i} failed to load character data. Using default stats.");
+                    stats.Initialize(playerName, selectedCharacterID, 30f, AbilityType.None, null, i);
+                }
+                
                 activePlayers.Add(stats);
             }
             
@@ -91,5 +108,6 @@ public class GameSceneManager : MonoBehaviour
                 playerMovements.Add(movement); 
             }
         }
-   }
+        Debug.Log($"FINAL ACTIVE PLAYER COUNT: {activePlayers.Count}"); 
+    }
 }

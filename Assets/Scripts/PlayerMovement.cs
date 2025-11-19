@@ -39,6 +39,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (rollButton != null)
         {
+            rollButton.onClick.RemoveAllListeners(); 
             rollButton.onClick.AddListener(RollAndMove);
         }
     }
@@ -63,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isMoving) return; 
 
-        int diceRoll = Random.Range(1, 7);
+        int diceRoll = UnityEngine.Random.Range(1, 7);
         
         if (diceResultText != null)
         {
@@ -98,15 +99,30 @@ public class PlayerMovement : MonoBehaviour
         }
 
         isMoving = false;
-        
+        StartCoroutine(FinalizeTurnAfterEvent());
+    }
+
+    private IEnumerator FinalizeTurnAfterEvent()
+    {
+        yield return null; 
+
         bool eventHappened = TriggerTileEvent(waypoints[currentWaypointIndex]);
 
         if (!eventHappened)
         {
+            yield return new WaitForSeconds(0.1f); 
+            
             if (turnManager != null)
             {
                 turnManager.EndTurn();
             }
+        }
+    }
+    public void FinishTurnExecution()
+    {
+        if (turnManager != null)
+        {
+            turnManager.EndTurn();
         }
     }
 
