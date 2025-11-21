@@ -7,6 +7,7 @@ public class UI_ActionManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        gameManager = FindAnyObjectByType<GameManager>();
         if (gameManager == null)
         {
             Debug.Log("GameManager not found");

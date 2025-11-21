@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{DB33B728-3EE0-3B50-0241-467317A46AE7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GifImporter.Editor", "GifImporter.Editor.csproj", "{12B5DBAB-C291-756C-B959-E027E5FB1EBB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GifForUnity", "GifForUnity.csproj", "{EB69F82E-0DC9-C359-D59C-1DBB4F93C0C5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DB33B728-3EE0-3B50-0241-467317A46AE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB33B728-3EE0-3B50-0241-467317A46AE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB33B728-3EE0-3B50-0241-467317A46AE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB33B728-3EE0-3B50-0241-467317A46AE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12B5DBAB-C291-756C-B959-E027E5FB1EBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12B5DBAB-C291-756C-B959-E027E5FB1EBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12B5DBAB-C291-756C-B959-E027E5FB1EBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12B5DBAB-C291-756C-B959-E027E5FB1EBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB69F82E-0DC9-C359-D59C-1DBB4F93C0C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB69F82E-0DC9-C359-D59C-1DBB4F93C0C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB69F82E-0DC9-C359-D59C-1DBB4F93C0C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB69F82E-0DC9-C359-D59C-1DBB4F93C0C5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

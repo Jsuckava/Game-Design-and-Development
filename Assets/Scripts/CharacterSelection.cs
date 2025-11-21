@@ -14,6 +14,7 @@ public class CharacterSelection : MonoBehaviour
     [Header("UI Elements")]
     public TextMeshProUGUI statusText; 
     public Button selectButton;
+    //public Button startButton;
     
     [Header("UI Panels")]
     public GameObject vsPopupPanel;
@@ -46,6 +47,12 @@ public class CharacterSelection : MonoBehaviour
              Debug.LogError("FATAL ERROR: 'Select Button' is NULL in the Inspector.");
              return;
         }
+
+        //if (startButton == null)
+        //{
+        //    Debug.LogError("FATAL ERROR: 'Start Button' is NULL in the Inspector.");
+        //    return;
+        //}
         if (selectButtonText == null)
         {
              Debug.LogError("FATAL ERROR: 'Select Button' is linked, but the required TextMeshPro component is missing from its children. Please check the button's hierarchy.");
@@ -59,6 +66,11 @@ public class CharacterSelection : MonoBehaviour
         characterGrid.SetActive(true);
         
         UpdateUI(); 
+    }
+
+    private void StartGame()
+    {
+        SceneManager.LoadScene("FightingScene");
     }
 
     // If your buttons send 1, 2, 3... this function converts them to 0, 1, 2...
@@ -83,6 +95,12 @@ public class CharacterSelection : MonoBehaviour
 
     public void ConfirmSelection()
     {
+        if (pickingPlayer == 3)
+        {
+            Debug.Log("Phase 3 (Ready) detected. Starting Game...");
+            StartGame();
+            return;
+        }
         if (currentlyHighlightedID == -1) return;
 
         if (pickingPlayer == 1)
@@ -98,7 +116,7 @@ public class CharacterSelection : MonoBehaviour
         else if (pickingPlayer == 2)
         {
             gameData.player2CharacterID = currentlyHighlightedID;
-            Debug.Log($"Player 2 Selected Character ID: {gameData.player2CharacterID}");
+            Debug.Log($"Playyer 2 Selected Character ID: {gameData.player2CharacterID}");
             pickingPlayer = 3;
             
             LoadAndPlayMatchupVideos(); 
@@ -108,14 +126,7 @@ public class CharacterSelection : MonoBehaviour
             return; 
         }
         
-        if (pickingPlayer == 3)
-        {
-            if (vsPopupPanel.activeSelf)
-            {
-                StartGame();
-                return;
-            }
-        }
+        
     }
 
     private void LoadAndPlayMatchupVideos()
@@ -205,8 +216,5 @@ public class CharacterSelection : MonoBehaviour
         }
     }
 
-    private void StartGame()
-    {
-        SceneManager.LoadScene("GameScene");
-    }
+
 }
