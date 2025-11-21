@@ -7,6 +7,7 @@ public class UI_ActionManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        gameManager = FindAnyObjectByType<GameManager>();
         if (gameManager == null)
         {
             Debug.Log("GameManager not found");
@@ -61,20 +62,4 @@ public class UI_ActionManager : MonoBehaviour
         }
         
     }
-
-    // public void HandleDefend()
-    // {
-    //     if (gameManager == null) return;
-
-    //     if (gameManager.currentState == GameState.Player1Turn)
-    //     {
-    //         Debug.Log("Player 1 Defend");
-    //         gameManager.ChangeState(GameState.Player2Turn);
-    //     }
-    //     else if (gameManager.currentState == GameState.Player2Turn)
-    //     {
-    //         Debug.Log("Player 2 Defend");
-    //         gameManager.ChangeState(GameState.Player1Turn);
-    //     }
-    // }
 }

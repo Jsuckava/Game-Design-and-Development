@@ -1,5 +1,8 @@
-Library/
-
-Library/
-
-Library/
+.vs
+Temp
+UserSettings
+.vsconfig
+Logs
+*.csproj
+Library
+Build/

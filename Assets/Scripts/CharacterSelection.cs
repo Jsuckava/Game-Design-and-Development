@@ -46,6 +46,7 @@ public class CharacterSelection : MonoBehaviour
              Debug.LogError("FATAL ERROR: 'Select Button' is NULL in the Inspector.");
              return;
         }
+       
         if (selectButtonText == null)
         {
              Debug.LogError("FATAL ERROR: 'Select Button' is linked, but the required TextMeshPro component is missing from its children. Please check the button's hierarchy.");
@@ -61,16 +62,16 @@ public class CharacterSelection : MonoBehaviour
         UpdateUI(); 
     }
 
-    // If your buttons send 1, 2, 3... this function converts them to 0, 1, 2...
+    private void StartGame()
+    {
+        SceneManager.LoadScene("FightingScene");
+    }
+
     public void HighlightCharacter(int characterID)
     {
         if (pickingPlayer == 3) return;
-
-        // ADJUSTMENT: If buttons send 1-based IDs (1-7), subtract 1 to get array index (0-6)
-        // If your buttons already send 0-6, remove the "- 1" part.
         int arrayIndex = characterID - 1; 
 
-        // SAFETY CHECK: Prevent setting an invalid ID
         if (arrayIndex < 0 || arrayIndex >= characterDatabase.Length)
         {
             Debug.LogError($"Attempted to highlight invalid character ID: {characterID} (Index: {arrayIndex}). Database size: {characterDatabase.Length}");
@@ -83,6 +84,12 @@ public class CharacterSelection : MonoBehaviour
 
     public void ConfirmSelection()
     {
+        if (pickingPlayer == 3)
+        {
+            Debug.Log("Phase 3 (Ready) detected. Starting Game...");
+            StartGame();
+            return;
+        }
         if (currentlyHighlightedID == -1) return;
 
         if (pickingPlayer == 1)
@@ -98,7 +105,7 @@ public class CharacterSelection : MonoBehaviour
         else if (pickingPlayer == 2)
         {
             gameData.player2CharacterID = currentlyHighlightedID;
-            Debug.Log($"Player 2 Selected Character ID: {gameData.player2CharacterID}");
+            Debug.Log($"Playyer 2 Selected Character ID: {gameData.player2CharacterID}");
             pickingPlayer = 3;
             
             LoadAndPlayMatchupVideos(); 
@@ -108,14 +115,7 @@ public class CharacterSelection : MonoBehaviour
             return; 
         }
         
-        if (pickingPlayer == 3)
-        {
-            if (vsPopupPanel.activeSelf)
-            {
-                StartGame();
-                return;
-            }
-        }
+        
     }
 
     private void LoadAndPlayMatchupVideos()
@@ -140,7 +140,6 @@ public class CharacterSelection : MonoBehaviour
 
     private void PlayVideoOnTarget(VideoPlayer targetPlayer, int charID)
     {
-        // ROBUST CHECK: Prevent out of bounds access
         if (charID < 0 || characterDatabase == null || charID >= characterDatabase.Length)
         {
             Debug.LogError($"FATAL ERROR: Invalid Data for PlayVideoOnTarget. CharID: {charID}, Database Size: {(characterDatabase != null ? characterDatabase.Length.ToString() : "null")}");
@@ -205,8 +204,5 @@ public class CharacterSelection : MonoBehaviour
         }
     }
 
-    private void StartGame()
-    {
-        SceneManager.LoadScene("GameScene");
-    }
+
 }

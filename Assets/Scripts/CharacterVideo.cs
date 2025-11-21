@@ -8,7 +8,6 @@ public class CharacterVideo : MonoBehaviour
     private VideoClip idleClip;
     private VideoClip attack1Clip;
     private VideoClip hitClip;
-    // Removed: private VideoClip defeatClip;
     
     private VideoClip kickClip;
     private VideoClip superClip;
@@ -33,7 +32,6 @@ public class CharacterVideo : MonoBehaviour
         idleClip = data.idleClip;
         attack1Clip = data.attack1Clip;
         hitClip = data.hitClip;
-        // Removed: defeatClip = data.defeatClip;
         
         kickClip = data.kickClip;
         superClip = data.superClip;
@@ -67,7 +65,13 @@ public class CharacterVideo : MonoBehaviour
 
     public void PlayHit()
     {
-        if (videoPlayer == null || hitClip == null) return;
+        if (hitClip == null)
+        {
+            Debug.Log($"Character {name} is missing a hit clip");
+            OnVideoFinished?.Invoke();
+            return;
+        }
+        if (videoPlayer == null) return;
         videoPlayer.clip = hitClip;
         videoPlayer.isLooping = false;
         videoPlayer.Play();
@@ -75,7 +79,13 @@ public class CharacterVideo : MonoBehaviour
 
     public void PlayKick()
     {
-        if (videoPlayer == null || kickClip == null) return;
+        if (hitClip == null)
+        {
+            Debug.Log($"Character {name} is missing a hit clip");
+            OnVideoFinished?.Invoke();
+            return;
+        }
+        if (videoPlayer == null) return;
         videoPlayer.clip = kickClip; 
         videoPlayer.isLooping = false;
         videoPlayer.Play();
@@ -83,7 +93,13 @@ public class CharacterVideo : MonoBehaviour
 
     public void PlaySuper()
     {
-        if (videoPlayer == null || superClip == null) return;
+        if (hitClip == null)
+        {
+            Debug.Log($"Character {name} is missing a hit clip");
+            OnVideoFinished?.Invoke();
+            return;
+        }
+        if (videoPlayer == null) return;
         videoPlayer.clip = superClip; 
         videoPlayer.isLooping = false;
         videoPlayer.Play();
