@@ -1,52 +1,5 @@
-# --- Unity / OS
-[Ll]ibrary/
-[Tt]emp/
-[Bb]uild/
-[Bb]uilds/
-[Ll]ogs/
-[Oo]bj/
-[Mm]emoryCaptures/
-UserSettings/
-.gradle/
 .vs/
-*.csproj
-*.unityproj
-*.sln
-*.suo
-*.tmp
-*.user
-*.userprefs
-*.pidb
-*.booproj
-*.svd
-*.pdb
-*.mdb
-*.opendb
-*.VC.db
-*.pidb.meta
-*.apk
-*.aab
-
-# --- Crash/Profiler
-*.stackdump
-*.dmp
-
-# --- Rider / VS Code
-.idea/
-.project/
-.classpath
-.c9/
-*.launch
-.settings/
-.vscode/
-.vscode/*
-!.vscode/extensions.json
-!.vscode/settings.json
-!.vscode/tasks.json
-
-# --- Unity auto-generated
-*.unitypackage
-
-# --- Addressables & Cache
-/[Aa]ssets/AddressableAssetsData/*/*.bin*
-/[Aa]ssets/StreamingAssets/aa/*
+Logs/
+obj/
+Temp/
+Library/
