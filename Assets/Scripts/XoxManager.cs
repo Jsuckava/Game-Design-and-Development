@@ -1,34 +1,46 @@
 using TMPro;
-using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 
 public class XoxManager : MonoBehaviour
 {
     public Button[] tilesButton;
     public TextMeshProUGUI winnerText;
 
+    private TextMeshProUGUI[] tilesText; 
     private string playerSide = "X";
     private int moveCount = 0;
     private string[] boardPanel = new string[9];
     
     private MinigameManager minigameManager;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private int drawCount = 0; 
+
     void Start()
     {
-		minigameManager = FindFirstObjectByType<MinigameManager>();
-		if (minigameManager == null)
-		{
-			Debug.Log("XoxManager could not find MinigameManager!");
-		}
+        minigameManager = FindFirstObjectByType<MinigameManager>();
+        if (minigameManager == null)
+        {
+            Debug.Log("XoxManager could not find MinigameManager!");
+        }
+
+        drawCount = 0; 
+
+        tilesText = new TextMeshProUGUI[tilesButton.Length];
+        for (int i = 0; i < tilesButton.Length; i++)
+        {
+            tilesText[i] = tilesButton[i].GetComponentInChildren<TextMeshProUGUI>();
+            if (tilesText[i] == null)
+            {
+                Debug.LogError($"Button {i} is missing a TextMeshProUGUI child component!", tilesButton[i].gameObject);
+            }
+        }
+
         SetupBoard();
     }
 
-    // Update is called once per frame
     void Update()
     {
 
@@ -43,7 +55,11 @@ public class XoxManager : MonoBehaviour
         {
             boardPanel[i] = "";
             tilesButton[i].interactable = true;
-            tilesButton[i].GetComponentInChildren<TextMeshProUGUI>().text = "";
+            
+            if (tilesText[i] != null) 
+            {
+                tilesText[i].text = "";
+            }
 
             int index = i;
             tilesButton[i].onClick.RemoveAllListeners();
@@ -54,8 +70,10 @@ public class XoxManager : MonoBehaviour
     public void OnTileClicked(int index) {
         if (boardPanel[index] != "" || !tilesButton[index].interactable || playerSide == "O") return ;
 
+        if (tilesText[index] == null) return;
+
         boardPanel[index] = playerSide;
-        tilesButton[index].GetComponentInChildren<TextMeshProUGUI>().text = playerSide;
+        tilesText[index].text = playerSide; 
         tilesButton[index].interactable = false;
         moveCount++;
 
@@ -65,7 +83,15 @@ public class XoxManager : MonoBehaviour
         }
         else if (moveCount >= 9)
         {
-            GameOver("Draw");
+            drawCount++;
+            if (drawCount >= 3)
+            {
+                GameOver("O"); 
+            }
+            else
+            {
+                StartCoroutine(RestartDelay()); 
+            }
         }
         else
         {
@@ -79,38 +105,46 @@ public class XoxManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         int bestMove = FindBestMove();
-
-
         
         if (!winnerText.gameObject.activeInHierarchy)
         {
-			boardPanel[bestMove] = playerSide;
-			tilesButton[bestMove].GetComponentInChildren<TextMeshProUGUI>().text = playerSide;
-			tilesButton[bestMove].interactable = false;
-			moveCount++;
-			
-			if (CheckForWin())
-			{
-				GameOver(playerSide);
-			}
-			else if (moveCount >= 9)
-			{
-				GameOver("Draw");
-			}
-			else
-			{
-				ChangePlayerSide();
-			}
-		}
+            if (tilesText[bestMove] == null)
+            {
+                Debug.LogError($"AI trying to move to {bestMove}, but it has no TextMeshProUGUI component.");
+                yield break; 
+            }
 
+            boardPanel[bestMove] = playerSide;
+            tilesText[bestMove].text = playerSide; 
+            tilesButton[bestMove].interactable = false;
+            moveCount++;
+            
+            if (CheckForWin())
+            {
+                GameOver(playerSide);
+            }
+            else if (moveCount >= 9)
+            {
+                drawCount++;
+                if (drawCount >= 3)
+                {
+                    GameOver("O"); 
+                }
+                else
+                {
+                    StartCoroutine(RestartDelay());
+                }
+            }
+            else
+            {
+                ChangePlayerSide();
+            }
+        }
         
-
-        // OnTileClicked(bestMove);
     }
 
     int FindBestMove()
     {
-		//win
         for (int i = 0; i < boardPanel.Length; i++)
         {
             if (boardPanel[i] == "")
@@ -125,7 +159,6 @@ public class XoxManager : MonoBehaviour
             }
         }
         
-        //block
         for (int i = 0; i < boardPanel.Length; i++)
         {
             if (boardPanel[i] == "")
@@ -140,13 +173,11 @@ public class XoxManager : MonoBehaviour
             }
         }
         
-        //take center
         if (boardPanel[4] == "")
         {
             return 4;
         }
         
-        //take cover
         List<int> corners = new List<int> { 0, 2, 6, 8 };
         corners = corners.OrderBy(x => Random.Range(0f, 1f)).ToList();
         foreach (int corner in corners)
@@ -157,7 +188,6 @@ public class XoxManager : MonoBehaviour
             }
         }
         
-        //take side
         List<int> sides = new List<int> { 1, 3, 5, 7 };
         sides = sides.OrderBy(x => Random.Range(0f, 1f)).ToList();
         foreach (int side in sides)
@@ -170,11 +200,11 @@ public class XoxManager : MonoBehaviour
         
         for (int i = 0; i < boardPanel.Length; i++)
         {
-			if (boardPanel[i] == "") return i;
-		}
+            if (boardPanel[i] == "") return i;
+        }
 
         return 0;
-     }
+    }
 
 
     void ChangePlayerSide() {
@@ -223,16 +253,19 @@ public class XoxManager : MonoBehaviour
     
     IEnumerator CloseMiniGameAfterDelay(bool didPlayerWin)
     {
-		yield return new WaitForSeconds(2f);
-		
-		if (minigameManager != null)
-		{
-			minigameManager.OnMinigameCompleted(didPlayerWin);
-		}
-	}
+        yield return new WaitForSeconds(2f);
+        
+        if (minigameManager != null)
+        {
+            minigameManager.OnMinigameCompleted(didPlayerWin);
+        }
+    }
     
     IEnumerator RestartDelay()
     {
+        winnerText.gameObject.SetActive(true);
+        winnerText.text = $"It's a Draw! Round {drawCount + 1}";
+
         yield return new WaitForSeconds(2f);
         RestartGame();
     }

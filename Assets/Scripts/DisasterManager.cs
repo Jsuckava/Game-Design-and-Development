@@ -8,6 +8,9 @@ public class DisasterManager : MonoBehaviour
     public List<PlayerStats> allActivePlayers = new List<PlayerStats>();
 
     private const int GM_BASE_ROLL = 10;
+    
+    public int globalMorale = 0;
+    private const int MAX_GLOBAL_MORALE = 100;
 
     public int RollD20()
     {
@@ -111,5 +114,31 @@ public class DisasterManager : MonoBehaviour
                 Debug.Log($"{nextPlayer.gameObject.name} also lost {(-amount)} energy due to proximity.");
             }
         }
+    }
+    
+    public void AddGlobalMorale(int amount)
+    {
+        globalMorale += amount;
+        globalMorale = Mathf.Clamp(globalMorale, 0, MAX_GLOBAL_MORALE);
+        
+        Debug.Log($"Global Morale increased by {amount}. Current Morale: {globalMorale}/{MAX_GLOBAL_MORALE}");
+
+        if (globalMorale >= MAX_GLOBAL_MORALE)
+        {
+            TriggerGlobalMoraleReward();
+        }
+    }
+    
+    private void TriggerGlobalMoraleReward()
+    {
+        Debug.Log("GLOBAL MORALE REWARD UNLOCKED! Distributing benefits.");
+        List<PlayerStats> playersToHeal = new List<PlayerStats>(allActivePlayers);
+
+        foreach (PlayerStats player in playersToHeal)
+        {
+            player.ChangeEnergy(5f); 
+        }
+        
+        globalMorale = 0;
     }
 }

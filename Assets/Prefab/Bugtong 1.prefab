@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 92157453135119940}
   - component: {fileID: 8394883649627243957}
   - component: {fileID: 3493815338764145383}
-  - component: {fileID: 5897571369584521098}
+  - component: {fileID: 6115758281257007469}
   m_Layer: 0
   m_Name: Bugtong 1
   m_TagString: Untagged
@@ -200,15 +200,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 6008755849024553855, guid: e9e587d7235c662469b49cd17c0ecbb1, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -217,7 +217,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5897571369584521098
+--- !u!114 &6115758281257007469
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -226,9 +226,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2967748497824130937}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44f477d24b725f26e8da145f421e63fb, type: 3}
+  m_Script: {fileID: 11500000, guid: 26fad8744926aa1439682fb254f43713, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BugtongManager
+  m_EditorClassIdentifier: 
   bugtongText: {fileID: 957610693261184824}
   timerText: {fileID: 6596130797593746902}
   resultText: {fileID: 5824670005318404116}

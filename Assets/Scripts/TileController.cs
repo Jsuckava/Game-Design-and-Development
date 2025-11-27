@@ -19,7 +19,6 @@ public class BuildTileController : MonoBehaviour
         PlayerStats playerStats = player.GetComponent<PlayerStats>();
         if (playerStats == null)
         {
-            Debug.LogError("PlayerStats component not found!");
             return;
         }
 
