@@ -20,8 +20,7 @@ public class GameSceneManager : MonoBehaviour
 
     [Header("Runtime Player List")]
     public List<PlayerStats> activePlayers = new List<PlayerStats>();
-    private List<PlayerMovement> playerMovements = new List<PlayerMovement>();
-    
+    private List<PlayerMovement> playerMovements = new List<PlayerMovement>();   
     private Transform[] allWaypoints;
     private const string SelectedOptionKeyPrefix = "Player_"; 
     private const string PlayerNameKeyPrefix = "PlayerName_"; 
