@@ -183,4 +183,13 @@ public class TurnManager : MonoBehaviour
         }
         StartTurn(activePlayers[currentPlayerIndex]);
     }
+
+    public PlayerStats GetCurrentActivePlayer()
+    {
+        if (activePlayers != null && activePlayers.Count > 0)
+        {
+            return activePlayers[currentPlayerIndex];
+        }
+        return null;
+    }
 }

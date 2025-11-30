@@ -6,12 +6,27 @@ using System.Linq;
 using UnityEngine.Events;
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 
 public class PopupController : MonoBehaviour
 {
     [Header("Main Panel")]
     public GameObject popupPanel;
     public TextMeshProUGUI titleText;
+
+    [Header("Inventory System")]
+    public GameObject inventoryPanel;
+    public Transform inventoryGridContent;
+    public GameObject inventorySlotPrefab;
+    public Button inventoryCloseBtn;
+
+    public TextMeshProUGUI inventoryTitleText;
+
+    [Header("Inventory Details")]
+    public GameObject itemDetailPanel;
+    public TextMeshProUGUI detailNameText;
+    public TextMeshProUGUI detailDescText;
+    public Image detailImage;
 
     [Header("Component Links")]
     public PunishmentDeck punishmentDeck;
@@ -62,6 +77,68 @@ public class PopupController : MonoBehaviour
         if (useButton != null) useButton.gameObject.SetActive(false);
 
         popupPanel.SetActive(false);
+
+        if (inventoryCloseBtn != null) inventoryCloseBtn.onClick.AddListener(CloseInventory);
+        if (inventoryPanel != null) inventoryPanel.SetActive(false);
+        if (itemDetailPanel != null) itemDetailPanel.SetActive(false);
+    }
+
+    public void ShowInventory(PlayerStats player)
+    {
+        if (inventoryPanel == null) return;
+
+        inventoryPanel.SetActive(true);
+        if (itemDetailPanel != null) itemDetailPanel.SetActive(false);
+        if (inventoryTitleText != null) inventoryTitleText.text = $"{player.playerName}'s Inventory";
+        foreach (Transform child in inventoryGridContent)
+        {
+            Destroy(child.gameObject);
+        }
+
+        if (player.bamboo > 0)
+        {
+            CreateInventorySlot("Bamboo", player.bamboo, punishmentDeck.bambooArt, "Used for crafting Bahay Kub parts.");
+        }
+        if (player.nipaLeaves > 0)
+        {
+            CreateInventorySlot("Nipa Leaves", player.nipaLeaves, punishmentDeck.nipaArt, "Used for crafting Bahay Kub parts.");
+        }
+        if (player.hardwood > 0)
+        {
+            CreateInventorySlot("Hardwood", player.hardwood, punishmentDeck.hardwoodArt, "Used for crafting Bahay Kub parts.");
+        }
+        if (player.sawali > 0)
+        {
+            CreateInventorySlot("Sawali", player.sawali, punishmentDeck.sawaliArt, "Used for crafting Bahay Kub parts.");
+        }
+    }
+
+    private void CreateInventorySlot(string name, int count, Sprite icon, string desc)
+    {
+        GameObject newSlot = Instantiate(inventorySlotPrefab, inventoryGridContent);
+        InventorySlot slotScript = newSlot.GetComponent<InventorySlot>();
+
+        if (slotScript != null)
+        {
+            slotScript.Initialize(name, count, icon, desc, OnItemClicked);
+        }
+    }
+
+    private void OnItemClicked(string name, string desc, Sprite icon)
+    {
+        if (itemDetailPanel != null)
+        {
+            itemDetailPanel.SetActive(true);
+            if (detailNameText != null) detailNameText.text = name;
+            if (detailImage != null) detailImage.sprite = icon;
+            if (detailDescText != null) detailDescText.text = desc;
+            
+        }
+    }
+
+    public void CloseInventory()
+    {
+        if (inventoryPanel != null) inventoryPanel.SetActive(false); 
     }
 
     public void ShowPunishmentChoice(string title, PlayerStats player)
@@ -220,6 +297,7 @@ public class PopupController : MonoBehaviour
         revealCloseButton.gameObject.SetActive(true);
 
         storedPunishmentEvent = punishment.onPunishmentSelected;
+        isMinigamePopup = punishment.isMinigame;
     }
 
     private void OnRewardCardSelected(Punishment reward)
@@ -251,6 +329,7 @@ public class PopupController : MonoBehaviour
         }
         
         storedPunishmentEvent = null;
+        isMinigamePopup = false;
     }
 
     private void OnStoreClicked()
@@ -311,7 +390,7 @@ public class PopupController : MonoBehaviour
         currentPlayerStats = null;
         storedPunishmentEvent = null;
 
-        if (turnManager != null)
+        if (turnManager != null && !isMinigamePopup)
         {
             turnManager.EndTurn();
         }

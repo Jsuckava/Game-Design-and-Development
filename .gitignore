@@ -1,14 +1,5 @@
-# --- Unity / OS
-[Ll]ibrary/
-[Tt]emp/
-[Bb]uild/
-[Bb]uilds/
-[Ll]ogs/
-[Oo]bj/
-[Mm]emoryCaptures/
-UserSettings/
-.gradle/
 .vs/
+<<<<<<< HEAD
 *.csproj
 *.unityproj
 *.sln
@@ -51,3 +42,9 @@ UserSettings/
 /[Aa]ssets/AddressableAssetsData/*/*.bin*
 /[Aa]ssets/StreamingAssets/aa/*
 Game-Design-and-Development/
+=======
+Logs/
+obj/
+Temp/
+Library/
+>>>>>>> Inventory
