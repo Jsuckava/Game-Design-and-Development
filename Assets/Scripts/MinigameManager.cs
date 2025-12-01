@@ -48,32 +48,26 @@ public class MinigameManager : MonoBehaviour
             Destroy(popupContainer.GetChild(0).gameObject);
         }
         
-        // 1. WIN CONDITION: Transfer control to the PopupController and exit.
-        if (isWin)
+        popupContainer.gameObject.SetActive(false);
+
+        if (popupController != null && currentPlayerStats != null)
         {
-            Debug.Log("Player won.");
-            if (popupController != null && currentPlayerStats != null)
+            if (isWin)
             {
-                popupContainer.gameObject.SetActive(false);
-                // The PopupController will call EndTurn() when the reward popup is closed.
+                Debug.Log("Player won.");
                 popupController.ShowRewardChoice("Minigame Win! Choose Your Reward:", currentPlayerStats);
-                return; // CRITICAL: Stop the rest of the method from running.
             }
-        }
-        
-        // 2. LOSS CONDITION: Just clean up and ensure turn advances via the PopupController's standard path.
-        
-        Debug.Log("You Lose.");
-        popupContainer.gameObject.SetActive(false); 
-        
-        if (turnManager != null)
-        {
-            turnManager.EndTurn();
+            else
+            {
+                Debug.Log("You Lose.");
+                popupController.ShowPunishmentChoice("Aguy! ",currentPlayerStats);
+            }
         }
         else
         {
-            Debug.Log("MinigameManager could not find TurnManager to end the turn");
+             turnManager.EndTurn();
         }
+
         currentPlayerStats = null;
     }
 }

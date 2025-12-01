@@ -6,6 +6,7 @@ public class DisasterManager : MonoBehaviour
 {
     public TextMeshProUGUI diceResultText;
     public List<PlayerStats> allActivePlayers = new List<PlayerStats>();
+    public TurnManager turnManager;
 
     private const int GM_BASE_ROLL = 10;
     
@@ -118,8 +119,17 @@ public class DisasterManager : MonoBehaviour
     
     public void AddGlobalMorale(int amount)
     {
-        globalMorale += amount;
-        globalMorale = Mathf.Clamp(globalMorale, 0, MAX_GLOBAL_MORALE);
+        if (turnManager != null)
+        {
+            turnManager.ChangeCommunityMorale(amount);
+            globalMorale = turnManager.communityMorale;
+        } 
+        else 
+        {
+            globalMorale += amount;
+            globalMorale = Mathf.Clamp(globalMorale, 0, MAX_GLOBAL_MORALE);
+            Debug.LogWarning("TurnManager reference missing in DisasterManager. Community Morale UI not updated.");
+        }
         
         Debug.Log($"Global Morale increased by {amount}. Current Morale: {globalMorale}/{MAX_GLOBAL_MORALE}");
 
@@ -140,5 +150,10 @@ public class DisasterManager : MonoBehaviour
         }
         
         globalMorale = 0;
+        if (turnManager != null)
+        {
+            turnManager.communityMorale = 0;
+            turnManager.communityMoraleSlider.value = 0;
+        }
     }
 }

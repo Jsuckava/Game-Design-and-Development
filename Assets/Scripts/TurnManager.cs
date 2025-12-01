@@ -21,7 +21,7 @@ public class TurnManager : MonoBehaviour
 
     [Header("Community Morale")]
     public Slider communityMoraleSlider;
-    public int communityMorale = 50;
+    public int communityMorale = 0;
     private const int MIN_MORALE = 0;
     private const int MAX_MORALE = 100;
 
@@ -139,7 +139,6 @@ public class TurnManager : MonoBehaviour
             players[currentPlayerIndex].SetRollButtonInteractable(true);
         }
     }
-
     public void ChangeCommunityMorale(int amount)
     {
         communityMorale += amount;
@@ -182,6 +181,11 @@ public class TurnManager : MonoBehaviour
             currentPlayerIndex = 0;
         }
         StartTurn(activePlayers[currentPlayerIndex]);
+    }
+
+    public List<PlayerStats> GetAllActivePlayers()
+    {
+        return activePlayers;
     }
 
     public PlayerStats GetCurrentActivePlayer()

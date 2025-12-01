@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System.Collections.Generic; 
 
 public class PlayerStats : MonoBehaviour
 {
@@ -18,12 +19,13 @@ public class PlayerStats : MonoBehaviour
     public float maxEnergy = 30f;
     public float currentEnergy;
     private float minEnergy = 0f;
-
     public int bamboo = 0; 
     public int nipaLeaves = 0;
     public int hardwood = 0;
     public int sawali = 0;
     private int minMaterials = 0;
+
+    public Dictionary<string, int> cropInventory = new Dictionary<string, int>();
 
     private TurnManager turnManager;
     private PopupController popupController;
@@ -86,6 +88,25 @@ public class PlayerStats : MonoBehaviour
         morality += amount;
         morality = Mathf.Clamp(morality, minMorality, maxMorality);
         UpdateStatDisplay(); 
+    }
+    public void ChangeCropCount(string itemType, int amount)
+    {
+        if (cropInventory.ContainsKey(itemType))
+        {
+            cropInventory[itemType] += amount;
+            if (cropInventory[itemType] < 0)
+            {
+                cropInventory[itemType] = 0;
+            }
+            if (cropInventory[itemType] == 0)
+            {
+                cropInventory.Remove(itemType); 
+            }
+        }
+        else if (amount > 0)
+        {
+            cropInventory.Add(itemType, amount);
+        }
     }
 
     public void ChangeBamboo(int amount)

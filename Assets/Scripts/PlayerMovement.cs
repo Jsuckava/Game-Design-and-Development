@@ -105,19 +105,17 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator FinalizeTurnAfterEvent()
     {
         yield return null; 
+        
+        yield return new WaitForSeconds(0.05f); 
 
         bool eventHappened = TriggerTileEvent(waypoints[currentWaypointIndex]);
 
-        if (!eventHappened)
+        if (!eventHappened) 
         {
-            yield return new WaitForSeconds(0.1f); 
-            
-            if (turnManager != null)
-            {
-                turnManager.EndTurn();
-            }
+            FinishTurnExecution();
         }
     }
+    
     public void FinishTurnExecution()
     {
         if (turnManager != null)

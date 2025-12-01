@@ -20,7 +20,6 @@ public class MatchaPickHandler : MonoBehaviour
     public GameObject cardButtonPrefab;
     public TextMeshProUGUI timerText;
     public TextMeshProUGUI resultText;
-    //public GameObject resultPanel;
 
     private MinigameManager minigameManager;
     private List<Button> cardButtons = new List<Button>();
@@ -77,10 +76,6 @@ public class MatchaPickHandler : MonoBehaviour
         firstCardIndex = -1;
         secondCardIndex = -1;
         isInputLocked = false;
-
-        //if (resultPanel != null) resultPanel.SetActive(false);
-        //if (resultPanel != null) resultPanel.gameObject.SetActive(false);
-
         shuffledFaces.Clear();
         int pairsNeeded = 6;
         for (int i = 0; i < pairsNeeded; i++)
@@ -174,8 +169,6 @@ public class MatchaPickHandler : MonoBehaviour
     void GameOver(bool didPlayerWin)
     {
         isGameActive = false;
-
-        //if (resultPanel != null) resultPanel.SetActive(true);
         if (resultText != null)
         {
             resultText.gameObject.SetActive(true);

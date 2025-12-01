@@ -27,7 +27,7 @@ public class InventorySlot : MonoBehaviour
         if (slotButton != null)
         {
             slotButton.onClick.RemoveAllListeners();
-            slotButton.onClick.AddListener(OnClicked);   
+            slotButton.onClick.AddListener(OnClicked); 
         }
     }
 
@@ -38,6 +38,4 @@ public class InventorySlot : MonoBehaviour
             onSlotClicked?.Invoke(itemName, itemDescription, itemSprite);
         }
     }
-
-
 }
