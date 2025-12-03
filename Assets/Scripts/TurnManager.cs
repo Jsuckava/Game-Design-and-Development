@@ -2,7 +2,8 @@ using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine.UI;
-using System.Linq; 
+using System.Linq;
+using System;
 
 public class TurnManager : MonoBehaviour
 {
@@ -16,12 +17,12 @@ public class TurnManager : MonoBehaviour
     public Button mainRollButton; 
     public TextMeshProUGUI mainDiceResultText; 
 
-    [Header("Morality UI")]
-    public Slider moralitySlider;
+    // [Header("Morality UI")]
+    // public Slider moralitySlider;
 
-    [Header("Community Morale")]
-    public Slider communityMoraleSlider;
-    public int communityMorale = 50;
+    // [Header("Community Morale")]
+    // public Slider communityMoraleSlider;
+    // public int communityMorale = 50;
     private const int MIN_MORALE = 0;
     private const int MAX_MORALE = 100;
 
@@ -41,13 +42,13 @@ public class TurnManager : MonoBehaviour
         {
             mainDiceResultText = GameObject.Find("DiceResultText")?.GetComponent<TextMeshProUGUI>();
         }
-
-        if (communityMoraleSlider != null)
-        {
-            communityMoraleSlider.minValue = MIN_MORALE;
-            communityMoraleSlider.maxValue = MAX_MORALE;
-            communityMoraleSlider.value = communityMorale;
-        }
+        
+        // if (communityMoraleSlider != null)
+        // {
+        //     communityMoraleSlider.minValue = MIN_MORALE;
+        //     communityMoraleSlider.maxValue = MAX_MORALE;
+        //     communityMoraleSlider.value = communityMorale;
+        // }
     }
 
     public void Initialize(List<PlayerMovement> allPlayers, List<PlayerStats> allPlayerStats, TextMeshProUGUI[] uiSlots)
@@ -75,13 +76,13 @@ public class TurnManager : MonoBehaviour
         StartTurn(activePlayers[currentPlayerIndex]);
     }
 
-    public void UpdateMoralityVisual(int moralityValue)
-    {
-        if (moralitySlider != null)
-        {
-            moralitySlider.value = moralityValue; 
-        }
-    }
+    // public void UpdateMoralityVisual(int moralityValue)
+    // {
+    //     if (moralitySlider != null)
+    //     {
+    //         moralitySlider.value = moralityValue; 
+    //     }
+    // }
 
     private void StartTurn(PlayerStats currentPlayer)
     {
@@ -98,7 +99,7 @@ public class TurnManager : MonoBehaviour
             turnStatusText.text = $"{currentPlayer.playerName}'s Turn to Roll!";
         }
 
-        UpdateMoralityVisual(currentPlayer.morality);
+        // UpdateMoralityVisual(currentPlayer.morality);
 
         for (int i = 0; i < playerListSlots.Count; i++)
         {
@@ -140,17 +141,17 @@ public class TurnManager : MonoBehaviour
         }
     }
 
-    public void ChangeCommunityMorale(int amount)
-    {
-        communityMorale += amount;
-        communityMorale = Mathf.Clamp(communityMorale, MIN_MORALE, MAX_MORALE);
+    // public void ChangeCommunityMorale(int amount)
+    // {
+    //     communityMorale += amount;
+    //     communityMorale = Mathf.Clamp(communityMorale, MIN_MORALE, MAX_MORALE);
 
-        if (communityMoraleSlider != null)
-        {
-            communityMoraleSlider.value = communityMorale;
-        }
-        Debug.Log("New Community Morale: " + communityMorale);
-    }
+    //     // if (communityMoraleSlider != null)
+    //     // {
+    //     //     communityMoraleSlider.value = communityMorale;
+    //     // }
+    //     Debug.Log("New Community Morale: " + communityMorale);
+    // }
     
     public void EliminatePlayer(PlayerStats eliminatedPlayer)
     {

@@ -1,16 +1,28 @@
 using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.UI;
 
 public class DisasterManager : MonoBehaviour
 {
     public TextMeshProUGUI diceResultText;
+    public Slider globalMoraleSlider;
     public List<PlayerStats> allActivePlayers = new List<PlayerStats>();
 
     private const int GM_BASE_ROLL = 10;
     
     public int globalMorale = 0;
     private const int MAX_GLOBAL_MORALE = 100;
+
+    private void Start()
+    {
+        if (globalMoraleSlider != null)
+        {
+            globalMoraleSlider.minValue = 0;
+            globalMoraleSlider.maxValue = MAX_GLOBAL_MORALE;
+            globalMoraleSlider.value = globalMorale;
+        }
+    }
 
     public int RollD20()
     {
@@ -123,6 +135,11 @@ public class DisasterManager : MonoBehaviour
         
         Debug.Log($"Global Morale increased by {amount}. Current Morale: {globalMorale}/{MAX_GLOBAL_MORALE}");
 
+        if (globalMoraleSlider != null)
+        {
+            globalMoraleSlider.value = globalMorale;
+        }
+
         if (globalMorale >= MAX_GLOBAL_MORALE)
         {
             TriggerGlobalMoraleReward();
@@ -140,5 +157,10 @@ public class DisasterManager : MonoBehaviour
         }
         
         globalMorale = 0;
+
+        if (globalMoraleSlider != null)
+        {
+            globalMoraleSlider.value = globalMorale;
+        }
     }
 }

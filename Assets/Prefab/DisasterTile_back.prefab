@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 602425728265549334}
   - component: {fileID: 3346388242898665432}
   - component: {fileID: 7766779327427644812}
+  - component: {fileID: 8836255927364351035}
+  - component: {fileID: 6016504101156241014}
   m_Layer: 0
   m_Name: DisasterTile_back
   m_TagString: Untagged
@@ -120,3 +122,29 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!225 &8836255927364351035
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4901779075626194497}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &6016504101156241014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4901779075626194497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e38febca2012bdb41a019f561d6eeaf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIAnimation
+  pressScale: 0.9
+  animeSpeed: 0.1

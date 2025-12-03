@@ -68,6 +68,7 @@
     <Compile Include="Assets\MIMG\Scripting\Game\MIMG_button_game.cs" />
     <Compile Include="Assets\Scripts\TileController.cs" />
     <Compile Include="Assets\Scripts\PopupController.cs" />
+    <Compile Include="Assets\Scripts\UIAnimation.cs" />
     <Compile Include="Assets\Scripts\CharacterDb.cs" />
     <Compile Include="Assets\Scripts\ObjectMoverFor2ndPlayer.cs" />
     <Compile Include="Assets\Scripts\PlayerStats.cs" />

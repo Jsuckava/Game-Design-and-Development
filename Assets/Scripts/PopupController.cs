@@ -60,6 +60,8 @@ public class PopupController : MonoBehaviour
     private bool isMinigamePopup = false;
     private float storedRewardValue;
 
+    private float animDuration = 0.2f;
+
     void Start()
     {
         turnManager = FindFirstObjectByType<TurnManager>();
@@ -83,11 +85,61 @@ public class PopupController : MonoBehaviour
         if (itemDetailPanel != null) itemDetailPanel.SetActive(false);
     }
 
+    private void OpenPanelWithAnimation(GameObject panel)
+    {
+        StopAllCoroutines();
+        StartCoroutine(AnimePanelRoutine(panel, true));
+    }
+
+    private void ClosePanelWithAnimation(GameObject panel, Action onComplete = null)
+    {
+        StartCoroutine(AnimePanelRoutine(panel, false, onComplete));
+    }
+
+    private IEnumerator AnimePanelRoutine(GameObject panel, bool isOpen, Action onComplete = null)
+    {
+        CanvasGroup canvasGroup = panel.GetComponent<CanvasGroup>();
+        if (canvasGroup == null) canvasGroup = panel.AddComponent<CanvasGroup>();
+
+        panel.SetActive(true);
+        
+        Vector3 starScale = isOpen ? Vector3.zero * 0.7f : Vector3.one;
+        Vector3 endScale = isOpen ? Vector3.one : Vector3.zero * 0.7f;
+        float startAlpha = isOpen ? 0f : 1f;
+        float endAlpha = isOpen ? 1f : 0f;
+        float timer = 0f;
+
+        while (timer < animDuration)
+        {
+            timer += Time.deltaTime;
+            float t = timer / animDuration;
+            t = t * t * (3f - 2f * t); // Smoothstep
+            panel.transform.localScale = Vector3.Lerp(starScale, endScale, t);
+            canvasGroup.alpha = Mathf.Lerp(startAlpha, endAlpha, t);
+            yield return null;
+        }
+
+        panel.transform.localScale = isOpen ? Vector3.one : Vector3.zero * 0.7f;
+        canvasGroup.alpha = endAlpha;
+
+        if (!isOpen)
+        {
+            panel.SetActive(false);
+        }
+
+        if (onComplete != null)
+        {
+            onComplete.Invoke();
+        }
+
+    }
+
     public void ShowInventory(PlayerStats player)
     {
         if (inventoryPanel == null) return;
 
-        inventoryPanel.SetActive(true);
+        // inventoryPanel.SetActive(true);
+        OpenPanelWithAnimation(inventoryPanel);
         if (itemDetailPanel != null) itemDetailPanel.SetActive(false);
         if (inventoryTitleText != null) inventoryTitleText.text = $"{player.playerName}'s Inventory";
         foreach (Transform child in inventoryGridContent)
@@ -138,7 +190,7 @@ public class PopupController : MonoBehaviour
 
     public void CloseInventory()
     {
-        if (inventoryPanel != null) inventoryPanel.SetActive(false); 
+        if (inventoryPanel != null) ClosePanelWithAnimation(inventoryPanel);/* inventoryPanel.SetActive(false) */ 
     }
 
     public void ShowPunishmentChoice(string title, PlayerStats player)
@@ -168,7 +220,8 @@ public class PopupController : MonoBehaviour
                 OnPunishmentCardSelected(punishment);
             });
         }
-        popupPanel.SetActive(true);
+        // popupPanel.SetActive(true);
+        OpenPanelWithAnimation(popupPanel);
     }
 
     public void ShowMaterialChoice(string title, PlayerStats player)
@@ -199,7 +252,8 @@ public class PopupController : MonoBehaviour
                 OnPunishmentCardSelected(material);
             });
         }
-        popupPanel.SetActive(true);
+        // popupPanel.SetActive(true);
+        OpenPanelWithAnimation(popupPanel);
     }
 
     public void ShowMiniGamePopup(string title, PlayerStats player)
@@ -229,7 +283,8 @@ public class PopupController : MonoBehaviour
                 OnPunishmentCardSelected(minigameCard);
             });
         }
-        popupPanel.SetActive(true);
+        // popupPanel.SetActive(true);
+        OpenPanelWithAnimation(popupPanel);
         
     }
 
@@ -261,7 +316,8 @@ public class PopupController : MonoBehaviour
                 OnRewardCardSelected(reward);
             });
         }
-        popupPanel.SetActive(true);
+        // popupPanel.SetActive(true);
+        OpenPanelWithAnimation(popupPanel);
     }
 
     public void ShowSimplePopup(string title, string description)
@@ -278,7 +334,8 @@ public class PopupController : MonoBehaviour
         if (storeButton != null) storeButton.gameObject.SetActive(false);
         if (useButton != null) useButton.gameObject.SetActive(false);
 
-        popupPanel.SetActive(true);
+        // popupPanel.SetActive(true);
+        OpenPanelWithAnimation(popupPanel);
     }
 
     private void OnPunishmentCardSelected(Punishment punishment)
@@ -369,6 +426,12 @@ public class PopupController : MonoBehaviour
         storedPunishmentEvent = null;
         StartCoroutine(ClosePopupDelayed(2f));
     }
+
+    private void DisableButtons()
+    {
+        if (storeButton != null) storeButton.gameObject.SetActive(false);
+        if (useButton != null) useButton.gameObject.SetActive(false);
+    }
     
     IEnumerator ClosePopupDelayed(float delay)
     {
@@ -383,18 +446,30 @@ public class PopupController : MonoBehaviour
             storedPunishmentEvent.Invoke(currentPlayerStats);
         }
         
-        if (storeButton != null) storeButton.gameObject.SetActive(false);
-        if (useButton != null) useButton.gameObject.SetActive(false);
+        // if (storeButton != null) storeButton.gameObject.SetActive(false);
+        // if (useButton != null) useButton.gameObject.SetActive(false);
+        DisableButtons();
+        // popupPanel.SetActive(false);
+        // currentPlayerStats = null;
+        // storedPunishmentEvent = null;
 
-        popupPanel.SetActive(false);
-        currentPlayerStats = null;
-        storedPunishmentEvent = null;
-
-        if (turnManager != null && !isMinigamePopup)
+        ClosePanelWithAnimation(popupPanel, () =>
         {
-            turnManager.EndTurn();
-        }
+            currentPlayerStats = null;
+            storedPunishmentEvent = null;
+
+            if (turnManager != null && !isMinigamePopup)
+            {
+                turnManager.EndTurn();
+            }
+
+            isMinigamePopup = false;
+        });
+        // if (turnManager != null && !isMinigamePopup)
+        // {
+        //     turnManager.EndTurn();
+        // }
         
-        isMinigamePopup = false;
+        // isMinigamePopup = false;
     }
 }
