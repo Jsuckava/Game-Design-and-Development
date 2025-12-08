@@ -8,12 +8,17 @@ using System.Collections;
 
 public class MultiPlayerSelectionOfPlayerManager : MonoBehaviour
 {
+    [Header("Core References")]
     public CharacterManager characterManager;
     public TextMeshProUGUI playerTurnText;
+    
+    // IMPORTANT: Check your Inspector! Size must be 4, and Element 3 must be assigned!
     public TextMeshProUGUI[] confirmedNameTextSlots = new TextMeshProUGUI[4];
+    
     public Button startGameButton; 
     public Button mainSelectButton; 
     
+    [Header("Pop-up References")]
     public PopOutUp popoutManager; 
     public TMP_InputField nameInputField; 
     public TextMeshProUGUI popoutTitleText; 
@@ -27,6 +32,21 @@ public class MultiPlayerSelectionOfPlayerManager : MonoBehaviour
     void Start() 
     { 
         selectedCharacterIndices.Clear(); 
+        
+        // Ensure confirmed slots are hidden initially
+        for(int i = 0; i < confirmedNameTextSlots.Length; i++)
+        {
+            if (confirmedNameTextSlots[i] != null)
+            {
+                confirmedNameTextSlots[i].gameObject.SetActive(false);
+            }
+            else
+            {
+                // DEBUG: This will tell you if you forgot to drag Player 4's text in
+                Debug.LogError($"CRITICAL ERROR: 'Confirmed Name Text Slot' Element {i} is missing in the Inspector!");
+            }
+        }
+
         StartNewSelectionRound(); 
     }
 
@@ -44,6 +64,7 @@ public class MultiPlayerSelectionOfPlayerManager : MonoBehaviour
         {
             popoutManager.ShowPanel(); 
         }
+        
         if (mainSelectButton != null)
         {
             mainSelectButton.interactable = false;
@@ -59,7 +80,10 @@ public class MultiPlayerSelectionOfPlayerManager : MonoBehaviour
             nameInputField.Select();
         }
         
-        playerTurnText.text = "Player " + currentPlayerID.ToString() + " Enters Name...";
+        if (playerTurnText != null)
+        {
+            playerTurnText.text = "Player " + currentPlayerID.ToString() + " Enters Name...";
+        }
 
         if (startGameButton != null)
         {
@@ -69,11 +93,7 @@ public class MultiPlayerSelectionOfPlayerManager : MonoBehaviour
     
     public void ConfirmNameOnly()
     {
-        if (nameInputField == null)
-        {
-            Debug.LogError("Input Field is NULL. Assign it in the Inspector.");
-            return;
-        }
+        if (nameInputField == null) return;
         
         string playerName = nameInputField.text.Trim();
         if (string.IsNullOrEmpty(playerName))
@@ -99,7 +119,11 @@ public class MultiPlayerSelectionOfPlayerManager : MonoBehaviour
         {
             mainSelectButton.interactable = true;
         }
-        playerTurnText.text = playerName + " Selects...";
+        
+        if (playerTurnText != null)
+        {
+            playerTurnText.text = playerName + " Selects...";
+        }
     }
     
     public void ConfirmSelection(int sceneID) 
@@ -109,11 +133,9 @@ public class MultiPlayerSelectionOfPlayerManager : MonoBehaviour
         
         if (string.IsNullOrEmpty(playerName) || characterManager.characterDb == null || selectedCharacterIndices.Contains(selectedCharacterID)) 
         {
-            if (string.IsNullOrEmpty(playerName)) Debug.LogWarning("Name is missing. Please confirm name in pop-out first.");
-            if (characterManager.characterDb == null) Debug.LogError("Character Database is missing!");
-            if (selectedCharacterIndices.Contains(selectedCharacterID)) Debug.LogWarning("Character already chosen.");
             return; 
         } 
+        
         selectedCharacterIndices.Add(selectedCharacterID);
         
         if (selectedCharacterID >= 0 && selectedCharacterID < characterManager.characterDisplays.Length)
@@ -123,6 +145,7 @@ public class MultiPlayerSelectionOfPlayerManager : MonoBehaviour
                 characterManager.characterDisplays[selectedCharacterID].SetActive(false); 
             }
         }
+        
         Character chosenCharacter = characterManager.characterDb.GetCharacter(selectedCharacterID);
         int slotIndex = currentPlayerID - 1;
 
@@ -130,18 +153,25 @@ public class MultiPlayerSelectionOfPlayerManager : MonoBehaviour
         { 
             string confirmationText = "P" + currentPlayerID.ToString() + ": " + playerName + " - " + chosenCharacter.characterName;
             
-            confirmedNameTextSlots[slotIndex].gameObject.SetActive(true);
-            confirmedNameTextSlots[slotIndex].text = confirmationText;
+            if (slotIndex < confirmedNameTextSlots.Length && confirmedNameTextSlots[slotIndex] != null)
+            {
+                confirmedNameTextSlots[slotIndex].gameObject.SetActive(true);
+                confirmedNameTextSlots[slotIndex].text = confirmationText;
+            }
+            else
+            {
+                Debug.LogError($"PLAYER {currentPlayerID} (Index {slotIndex}) text slot is missing in Inspector!");
+            }
             
             PlayerPrefs.SetInt(SelectedOptionKeyPrefix + currentPlayerID, selectedCharacterID);
-            Debug.Log(playerName + " chose character: " + chosenCharacter.characterName);
         }
 
         currentPlayerID++; 
 
         if (currentPlayerID > MAX_PLAYERS)
         {
-            playerTurnText.text = "All Builders Ready!";
+            if(playerTurnText != null) playerTurnText.text = "All Builders Ready!";
+            
             characterManager.gameObject.SetActive(false);
             if(mainSelectButton != null) mainSelectButton.gameObject.SetActive(false);
             if (startGameButton != null) startGameButton.interactable = true;
@@ -162,9 +192,12 @@ public class MultiPlayerSelectionOfPlayerManager : MonoBehaviour
     
     public void UpdateLiveNameDisplay(string currentInput)
     { 
-        if (playerTurnText != null && popoutManager.panelObject.activeInHierarchy)
+        if (popoutManager != null && popoutManager.panelObject.activeInHierarchy)
         {
-            playerTurnText.text = "Player " + currentPlayerID.ToString() + " is: " + currentInput;
+            if (playerTurnText != null)
+            {
+                playerTurnText.text = "Player " + currentPlayerID.ToString() + " is: " + currentInput;
+            }
         }
     }
 }

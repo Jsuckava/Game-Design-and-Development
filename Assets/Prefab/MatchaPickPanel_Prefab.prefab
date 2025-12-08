@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d9109d3f64964e4891d9f7f405f1667, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MatchaPickHandler
-  cardBackSprite: {fileID: 8938696745146852490, guid: 75da90a99e2c98a4e85c873d3f205af9, type: 3}
+  cardBackSprite: {fileID: 1317733171639643808, guid: 84f5115f229807746877475ca9e3044c, type: 3}
   cardFaceSprite:
   - {fileID: 7028616704906629411, guid: 7a6c783e6279d4c4590075284d35e1a7, type: 3}
   - {fileID: 8288426215254106694, guid: bdb63e5cc3a2bb442ac56b1d7006549e, type: 3}

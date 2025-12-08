@@ -9,6 +9,7 @@ public class PlayerStats : MonoBehaviour
     private int playerID; 
 
     public string playerName;
+    public string assignedCharacterName; 
     public Sprite characterSprite;
     public AbilityType ability;
     
@@ -38,23 +39,17 @@ public class PlayerStats : MonoBehaviour
         bahayKuboTracker = FindFirstObjectByType<BahayKuboTracker>(); 
     }
 
-    public void Initialize(string name, int charID, float maxEnergyVal, AbilityType abilityType, Sprite sprite, int playerNum)
+    public void Initialize(string name, string charName, int charID, float maxEnergyVal, AbilityType abilityType, Sprite sprite, int playerNum)
     {
         playerName = name;
+        assignedCharacterName = charName;
         maxEnergy = maxEnergyVal;
         currentEnergy = maxEnergy; 
         ability = abilityType;
         characterSprite = sprite; 
         playerID = playerNum; 
         
-        if (playerVisual != null)
-        {
-            playerVisual.sprite = characterSprite;
-        }
-        else
-        {
-            
-        }
+        if (playerVisual != null) playerVisual.sprite = characterSprite;
         
         UpdateStatDisplay(); 
     }
@@ -63,16 +58,19 @@ public class PlayerStats : MonoBehaviour
     {
         if (myStatDisplay != null)
         {
-            myStatDisplay.text = $"{playerID}: {playerName} - {ability}\n" +
-                                 $"Energy: {currentEnergy} | Morality: {morality}";
+            myStatDisplay.text = $"{playerID}: {playerName} ({assignedCharacterName}) - {ability}\n" +
+                                 $"Energy: {currentEnergy}";
         }
     }
 
     public void ChangeEnergy(float amount) 
     {
+        float startEnergy = currentEnergy;
         currentEnergy += amount;
         currentEnergy = Mathf.Clamp(currentEnergy, minEnergy, maxEnergy);
         
+        Debug.Log($"[PlayerStats] {playerName} Energy Changed. Old: {startEnergy}, Added: {amount}, New: {currentEnergy}, Max Cap: {maxEnergy}");
+
         if (currentEnergy <= 0)
         {
             if (turnManager != null)
@@ -89,19 +87,14 @@ public class PlayerStats : MonoBehaviour
         morality = Mathf.Clamp(morality, minMorality, maxMorality);
         UpdateStatDisplay(); 
     }
+
     public void ChangeCropCount(string itemType, int amount)
     {
         if (cropInventory.ContainsKey(itemType))
         {
             cropInventory[itemType] += amount;
-            if (cropInventory[itemType] < 0)
-            {
-                cropInventory[itemType] = 0;
-            }
-            if (cropInventory[itemType] == 0)
-            {
-                cropInventory.Remove(itemType); 
-            }
+            if (cropInventory[itemType] < 0) cropInventory[itemType] = 0;
+            if (cropInventory[itemType] == 0) cropInventory.Remove(itemType); 
         }
         else if (amount > 0)
         {
@@ -113,48 +106,28 @@ public class PlayerStats : MonoBehaviour
     {
         bamboo += amount;
         bamboo = Mathf.Max(bamboo, minMaterials); 
-        
-        if (bahayKuboTracker != null)
-        {
-            bahayKuboTracker.AddBamboo(amount);
-        }
-        
+        if (bahayKuboTracker != null) bahayKuboTracker.AddBamboo(amount);
         UpdateStatDisplay();
     }
     public void ChangeNipa(int amount)
     {
         nipaLeaves += amount;
         nipaLeaves = Mathf.Max(nipaLeaves, minMaterials); 
-        
-        if (bahayKuboTracker != null)
-        {
-            bahayKuboTracker.AddNipa(amount);
-        }
-
+        if (bahayKuboTracker != null) bahayKuboTracker.AddNipa(amount);
         UpdateStatDisplay();
     }
     public void ChangeHardwood(int amount)
     {
         hardwood += amount;
         hardwood = Mathf.Max(hardwood, minMaterials); 
-        
-        if (bahayKuboTracker != null)
-        {
-            bahayKuboTracker.AddHardwood(amount);
-        }
-        
+        if (bahayKuboTracker != null) bahayKuboTracker.AddHardwood(amount);
         UpdateStatDisplay();
     }
     public void ChangeSawali(int amount)
     {
         sawali += amount;
         sawali = Mathf.Max(sawali, minMaterials); 
-        
-        if (bahayKuboTracker != null)
-        {
-            bahayKuboTracker.AddSawali(amount);
-        }
-
+        if (bahayKuboTracker != null) bahayKuboTracker.AddSawali(amount);
         UpdateStatDisplay();
     }
 
@@ -163,8 +136,5 @@ public class PlayerStats : MonoBehaviour
         return ability;
     }
 
-    public void ConsumeAbility()
-    {
-        
-    }
+    public void ConsumeAbility() { }
 }

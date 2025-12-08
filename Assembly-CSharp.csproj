@@ -58,6 +58,7 @@
     <Compile Include="Assets\Scripts\InventoryButtonHelper.cs" />
     <Compile Include="Assets\Scripts\MatchaPickHandler.cs" />
     <Compile Include="Assets\Scripts\BugtongManager.cs" />
+    <Compile Include="Assets\Scenes\honda\GameDevScripts\CharMove.cs" />
     <Compile Include="Assets\Scripts\CardShuffler.cs" />
     <Compile Include="Assets\MIMG\Demo\Scripts\Human.cs" />
     <Compile Include="Assets\MIMG\Demo\Scripts\CharacterController2D.cs" />
@@ -68,10 +69,12 @@
     <Compile Include="Assets\MIMG\Scripting\Game\MIMG_button_game.cs" />
     <Compile Include="Assets\Scripts\TileController.cs" />
     <Compile Include="Assets\Scripts\PopupController.cs" />
+    <Compile Include="Assets\Scripts\UIAnimation.cs" />
     <Compile Include="Assets\Scripts\CharacterDb.cs" />
     <Compile Include="Assets\Scripts\ObjectMoverFor2ndPlayer.cs" />
     <Compile Include="Assets\Scripts\PlayerStats.cs" />
     <Compile Include="Assets\Scripts\MultiPlayerSelectionOfPlayerManager.cs" />
+    <Compile Include="Assets\Scenes\honda\GameDevScripts\CharacterFSM.cs" />
     <Compile Include="Assets\Scripts\DisasterManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SimpleScript.cs" />
     <Compile Include="Assets\MIMG\Demo\Scripts\GAME_MENU.cs" />
@@ -85,6 +88,7 @@
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\AbilitiesType.cs" />
     <Compile Include="Assets\Scripts\PunishmentDeck.cs" />
+    <Compile Include="Assets\Scenes\honda\GameDevScripts\Tower.cs" />
     <Compile Include="Assets\Scripts\GameSceneManager.cs" />
     <Compile Include="Assets\Scripts\XoxManager.cs" />
     <Compile Include="Assets\Scripts\ObjectMover.cs" />

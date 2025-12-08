@@ -11,6 +11,8 @@ TagManager:
   - MiniGameTile
   - SafeZoneTile
   - DisasterTile
+  - Tower
+  - Character
   layers:
   - Default
   - TransparentFX

@@ -1,17 +1,52 @@
 using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.UI;
 
 public class DisasterManager : MonoBehaviour
 {
     public TextMeshProUGUI diceResultText;
+    public Slider globalMoraleSlider;
     public List<PlayerStats> allActivePlayers = new List<PlayerStats>();
     public TurnManager turnManager;
 
     private const int GM_BASE_ROLL = 10;
-    
-    public int globalMorale = 0;
+    public int globalMorale = 0; 
     private const int MAX_GLOBAL_MORALE = 100;
+
+    private void Start()
+    {
+        if (turnManager == null)
+        {
+            turnManager = FindFirstObjectByType<TurnManager>();
+        }
+
+        if (globalMoraleSlider != null)
+        {
+            globalMoraleSlider.minValue = 0;
+            globalMoraleSlider.maxValue = MAX_GLOBAL_MORALE;
+            if (turnManager != null)
+            {
+                globalMoraleSlider.value = turnManager.communityMorale;
+            }
+            else
+            {
+                globalMoraleSlider.value = globalMorale;
+            }
+        }
+    }
+
+    private void Update()
+    {
+        if (turnManager != null && globalMoraleSlider != null)
+        {
+            if (globalMoraleSlider.value != turnManager.communityMorale)
+            {
+                globalMoraleSlider.value = turnManager.communityMorale;
+                globalMorale = turnManager.communityMorale; 
+            }
+        }
+    }
 
     public int RollD20()
     {
@@ -86,12 +121,11 @@ public class DisasterManager : MonoBehaviour
     public void ApplyGlobalEnergyLoss(float amount, string source)
     {
         if (allActivePlayers == null || allActivePlayers.Count == 0) return;
-
         List<PlayerStats> playersToDamage = new List<PlayerStats>(allActivePlayers);
 
         foreach (PlayerStats player in playersToDamage)
         {
-            if (allActivePlayers.Contains(player))
+            if (player != null)
             {
                 player.ChangeEnergy(amount);
                 Debug.Log(player.gameObject.name + " lost " + (-amount) + " energy due to " + source + ".");
@@ -128,9 +162,14 @@ public class DisasterManager : MonoBehaviour
         {
             globalMorale += amount;
             globalMorale = Mathf.Clamp(globalMorale, 0, MAX_GLOBAL_MORALE);
-            Debug.LogWarning("TurnManager reference missing in DisasterManager. Community Morale UI not updated.");
+            Debug.LogWarning("TurnManager reference missing in DisasterManager. Using local calculations.");
         }
-        
+
+        if (globalMoraleSlider != null)
+        {
+            globalMoraleSlider.value = globalMorale;
+        }
+
         Debug.Log($"Global Morale increased by {amount}. Current Morale: {globalMorale}/{MAX_GLOBAL_MORALE}");
 
         if (globalMorale >= MAX_GLOBAL_MORALE)
@@ -142,18 +181,26 @@ public class DisasterManager : MonoBehaviour
     private void TriggerGlobalMoraleReward()
     {
         Debug.Log("GLOBAL MORALE REWARD UNLOCKED! Distributing benefits.");
-        List<PlayerStats> playersToHeal = new List<PlayerStats>(allActivePlayers);
-
-        foreach (PlayerStats player in playersToHeal)
+        
+        foreach (PlayerStats player in allActivePlayers)
         {
-            player.ChangeEnergy(5f); 
+            if(player != null) player.ChangeEnergy(5f); 
         }
         
         globalMorale = 0;
+
         if (turnManager != null)
         {
             turnManager.communityMorale = 0;
-            turnManager.communityMoraleSlider.value = 0;
+            if (turnManager.communityMoraleSlider != null) 
+            {
+                turnManager.communityMoraleSlider.value = 0;
+            }
+        }
+
+        if (globalMoraleSlider != null)
+        {
+            globalMoraleSlider.value = 0;
         }
     }
 }

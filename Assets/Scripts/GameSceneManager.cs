@@ -27,10 +27,7 @@ public class GameSceneManager : MonoBehaviour
 
     void Start()
     {
-        if (turnManager == null)
-        { 
-            turnManager = FindFirstObjectByType<TurnManager>();
-        }
+        if (turnManager == null) turnManager = FindFirstObjectByType<TurnManager>();
 
         if (waypointsParent != null)
         {
@@ -48,18 +45,11 @@ public class GameSceneManager : MonoBehaviour
 
         SpawnAllPlayers(); 
 
-        if (disasterManager != null)
-        {
-            disasterManager.allActivePlayers = activePlayers;
-        }
+        if (disasterManager != null) disasterManager.allActivePlayers = activePlayers;
         
         if (turnManager != null)
         {
             turnManager.Initialize(playerMovements, activePlayers, playerListSlots);
-        }
-        else
-        {
-            Debug.LogError("TurnManager is not found in the scene!");
         }
     }
 
@@ -69,6 +59,13 @@ public class GameSceneManager : MonoBehaviour
 
         for (int i = 1; i <= 4; i++)
         {
+            // Safety Check: Ensure we have enough spawn points
+            if (spawnPoints == null || i > spawnPoints.Length)
+            {
+                Debug.LogError($"CRITICAL: Missing Spawn Point for Player {i}. Check 'Spawn Points' array in GameSceneManager Inspector.");
+                continue;
+            }
+
             int selectedCharacterID = PlayerPrefs.GetInt(SelectedOptionKeyPrefix + i, 0);
             string playerName = PlayerPrefs.GetString(PlayerNameKeyPrefix + i, "Player " + i);
             
@@ -78,23 +75,23 @@ public class GameSceneManager : MonoBehaviour
             playerObject.name = $"P{i} - {playerName} ({characterData?.characterName ?? "Default"})"; 
             
             PlayerStats stats = playerObject.GetComponent<PlayerStats>();
-            if (stats == null)
-            {
-                stats = playerObject.AddComponent<PlayerStats>();
-            }
+            if (stats == null) stats = playerObject.AddComponent<PlayerStats>();
 
             if (stats != null)
             {
-                stats.myStatDisplay = playerListSlots[i - 1]; 
+                if (i <= playerListSlots.Length)
+                {
+                    stats.myStatDisplay = playerListSlots[i - 1]; 
+                }
                 
                 try
                 {
-                    stats.Initialize(playerName, selectedCharacterID, characterData.Energy, characterData.specialAbilityPower, characterData.characterSprite, i);
+                    stats.Initialize(playerName, characterData.characterName, selectedCharacterID, characterData.Energy, characterData.specialAbilityPower, characterData.characterSprite, i);
                 }
                 catch (System.NullReferenceException)
                 {
                     Debug.LogWarning($"Player {i} failed to load character data. Using default stats.");
-                    stats.Initialize(playerName, selectedCharacterID, 30f, AbilityType.None, null, i);
+                    stats.Initialize(playerName, "Default Character", selectedCharacterID, 30f, AbilityType.None, null, i);
                 }
                 
                 activePlayers.Add(stats);
