@@ -14,7 +14,7 @@ public class UIAnimation : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         originalScale = transform.localScale;
     }
-
+    // chineck ko lang kung nag cocommit ng maayos sa github.
     public void OnPointerDown(PointerEventData eventData)
     {
         Debug.Log("Pointer Down on " + gameObject.name);
