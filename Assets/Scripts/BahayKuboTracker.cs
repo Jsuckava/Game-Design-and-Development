@@ -29,9 +29,13 @@ public class BahayKuboTracker : MonoBehaviour
     public int pader_sawaliCost = 12;
     public int bubong_nipaCost = 12;
 
+    public AbilityManager abilityManager;
+    private const float build_energy_cost = 10f;
+
     void Start()
     {
         UpdateGlobalDisplay();
+        if (abilityManager == null) abilityManager = FindFirstObjectByType<AbilityManager>();
     }
 
     private void UpdateGlobalDisplay()
@@ -89,59 +93,72 @@ public class BahayKuboTracker : MonoBehaviour
     
     public string AttemptBuild(PlayerStats player)
     {
-        if (haligiBuilt && sahigBuilt && paderBuilt && bubongBuilt)
+        if (haligiBuilt && sahigBuilt && paderBuilt && bubongBuilt) return "Complete";
+
+        // 1. CALCULATE ENERGY COST WITH DISCOUNT
+        float finalEnergyCost = build_energy_cost;
+        
+        // Check for King Kiko's ability (Carpenter)
+        if (abilityManager != null)
         {
-            return "Complete";
+            float multiplier = abilityManager.GetBuildEnergyCostReduction(player);
+            finalEnergyCost *= multiplier; // If Carpenter, becomes 5.0f
         }
+
+        // 2. CHECK IF PLAYER HAS ENOUGH ENERGY
+        if (player.currentEnergy < finalEnergyCost)
+        {
+            return "NotEnoughEnergy"; 
+        }
+
+        // 3. ATTEMPT TO BUILD (Deduct Materials AND Energy)
+        bool buildSuccess = false;
+        string result = "";
 
         if (!haligiBuilt)
         {
-            if (player.bamboo >= haligi_bambooCost) 
-            {
+            if (player.bamboo >= haligi_bambooCost) {
                 player.ChangeBamboo(-haligi_bambooCost);
                 haligiBuilt = true;
-                return "Haligi";
-            }
-            return "NotEnoughBamboo"; 
+                result = "Haligi";
+                buildSuccess = true;
+            } else result = "NotEnoughBamboo";
         }
-
-        if (haligiBuilt && !sahigBuilt)
+        else if (!sahigBuilt)
         {
-            if (player.hardwood >= sahig_hardwoodCost)
-            {
+            if (player.hardwood >= sahig_hardwoodCost) {
                 player.ChangeHardwood(-sahig_hardwoodCost);
                 sahigBuilt = true;
-                return "Sahig";
-            }
-            return "NotEnoughHardwood"; 
+                result = "Sahig";
+                buildSuccess = true;
+            } else result = "NotEnoughHardwood";
         }
-
-        if (haligiBuilt && sahigBuilt && !paderBuilt)
+        else if (!paderBuilt)
         {
-            if (player.sawali >= pader_sawaliCost)
-            {
+            if (player.sawali >= pader_sawaliCost) {
                 player.ChangeSawali(-pader_sawaliCost);
                 paderBuilt = true;
-                return "Pader";
-            }
-            return "NotEnoughSawali"; 
+                result = "Pader";
+                buildSuccess = true;
+            } else result = "NotEnoughSawali";
         }
-
-        if (haligiBuilt && sahigBuilt && paderBuilt && !bubongBuilt)
+        else if (!bubongBuilt)
         {
-            if (player.nipaLeaves >= bubong_nipaCost)
-            {
+            if (player.nipaLeaves >= bubong_nipaCost) {
                 player.ChangeNipa(-bubong_nipaCost);
                 bubongBuilt = true;
-                if (haligiBuilt && sahigBuilt && paderBuilt && bubongBuilt)
-                {
-                     return "Complete";
-                }
-                return "Bubong"; 
-            }
-            return "NotEnoughNipa"; 
+                result = "Bubong";
+                buildSuccess = true;
+            } else result = "NotEnoughNipa";
         }
-        
-        return "Complete";
+
+        // 4. APPLY ENERGY COST IF SUCCESSFUL
+        if (buildSuccess)
+        {
+            player.ChangeEnergy(-finalEnergyCost);
+            Debug.Log($"Built {result}! Consumed {finalEnergyCost} Energy.");
+        }
+
+        return result;
     }
 }

@@ -60,6 +60,7 @@ public class PlayerStats : MonoBehaviour
         {
             myStatDisplay.text = $"{playerID}: {playerName} ({assignedCharacterName}) - {ability}\n" +
                                  $"Energy: {currentEnergy}";
+            myStatDisplay.fontStyle = FontStyles.Bold;
         }
     }
 

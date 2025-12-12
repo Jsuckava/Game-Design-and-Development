@@ -22,6 +22,8 @@ public class TurnManager : MonoBehaviour
     [Header("Community Morale")]
     public Slider communityMoraleSlider;
     public int communityMorale = 0;
+
+    public AbilityManager abilityManager;
     private const int MIN_MORALE = 0;
     private const int MAX_MORALE = 100;
 
@@ -33,6 +35,7 @@ public class TurnManager : MonoBehaviour
 
     void Start()
     {
+        abilityManager = FindFirstObjectByType<AbilityManager>();
         if (mainRollButton == null)
         {
             mainRollButton = FindFirstObjectByType<Button>();
@@ -99,6 +102,11 @@ public class TurnManager : MonoBehaviour
         }
 
         UpdateMoralityVisual(currentPlayer.morality);
+
+        if (abilityManager != null)
+        {
+            abilityManager.CheckStartOfTurnPassive(currentPlayer);
+        }
 
         for (int i = 0; i < playerListSlots.Count; i++)
         {

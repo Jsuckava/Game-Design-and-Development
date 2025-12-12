@@ -64,6 +64,8 @@ public class PopupController : MonoBehaviour
     public TextMeshProUGUI simpleDescriptionText;
     public Button simpleCloseButton;
 
+    public AbilityManager abilityManager;
+
     private TurnManager turnManager;
     private PlayerStats currentPlayerStats;
     
@@ -81,6 +83,7 @@ public class PopupController : MonoBehaviour
     {
         turnManager = FindFirstObjectByType<TurnManager>();
         disasterManager = FindFirstObjectByType<DisasterManager>();
+        abilityManager = FindFirstObjectByType<AbilityManager>();
 
         if (punishmentDeck == null)
             Debug.LogError("CRITICAL ERROR: The PunishmentDeck is NOT linked in the PopupController Inspector!", this.gameObject);
@@ -641,6 +644,11 @@ public class PopupController : MonoBehaviour
             if (isStored)
             {
                 message = $" {storedItemName}  (+{storedRewardItem.quantity}) stored in inventory! Global Morale boosted! \n(Closing in 2 seconds...)";
+                bool isVegetable = CheckIfVegetable(storedRewardItem.itemType);
+                if (isVegetable && abilityManager != null)
+                {
+                    abilityManager.CheckCardObtainedBonus(currentPlayerStats, "Vegetable");
+                }
             }
             else
             {
@@ -660,6 +668,12 @@ public class PopupController : MonoBehaviour
         storedRewardItem = null;
         storedPunishmentEvent = null;
         StartCoroutine(ClosePopupDelayed(2f));
+    }
+
+    private bool CheckIfVegetable(string itemType)
+    {
+        return itemType == "Talong" || itemType == "Singkamas" || itemType == "Sitaw" || 
+                    itemType == "Kalabasa" || itemType == "Mustasa" || itemType == "Ampalaya";    
     }
 
     private void OnUseClicked()

@@ -9,6 +9,9 @@ public class MinigameManager : MonoBehaviour
 
     [Header("Popup Container")]
     public Transform popupContainer;
+
+    public AbilityManager abilityManager;
+    public string minigamePlaying = null;
     
     private PlayerStats currentPlayerStats;
     private TurnManager turnManager;
@@ -18,6 +21,7 @@ public class MinigameManager : MonoBehaviour
     {
         turnManager = FindFirstObjectByType<TurnManager>();
         popupController = FindFirstObjectByType<PopupController>();
+        abilityManager = FindAnyObjectByType<AbilityManager>();
     }
 
     public void StartXoxMinigame(PlayerStats player)
@@ -25,6 +29,7 @@ public class MinigameManager : MonoBehaviour
         popupContainer.gameObject.SetActive(true);
         currentPlayerStats = player;
         Instantiate(xoxMinigamePrefab, popupContainer);
+        minigamePlaying = "Xox";
     }
 
     public void StartBugtongMinigame(PlayerStats player)
@@ -32,6 +37,7 @@ public class MinigameManager : MonoBehaviour
         popupContainer.gameObject.SetActive(true);
         currentPlayerStats = player;
         Instantiate(bugtongMinigamePrefab, popupContainer);
+        minigamePlaying = "Bugtong";
     }
 
     public void StartMatchaPickerMinigame(PlayerStats player)
@@ -39,10 +45,20 @@ public class MinigameManager : MonoBehaviour
         popupContainer.gameObject.SetActive(true);
         currentPlayerStats = player;
         Instantiate(matchaPickerMinigamePrefab, popupContainer);
+        minigamePlaying = "Matching";
     }
 
     public void OnMinigameCompleted(bool isWin)
     {
+        if (isWin)
+        {
+            Debug.Log("Player won");
+            if (minigamePlaying == "Bugtong")
+            {
+                abilityManager.CheckMinigameBonus(currentPlayerStats, "Bugtong");
+            }
+        }
+
         if (popupContainer.childCount > 0)
         {
             Destroy(popupContainer.GetChild(0).gameObject);
