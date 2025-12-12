@@ -11,9 +11,11 @@ public class Punishment
     public bool isMinigame;
     public Action<PlayerStats> onPunishmentSelected;
     public string itemType; 
-    public int quantity;   
-    public float value;    
-    public Punishment(string title, string description, Sprite cardArt, bool isMinigame, Action<PlayerStats> action, string itemType = "", int quantity = 0, float value = 0f)
+    public int quantity;    
+    public float value;     
+    public AudioClip effectSound; 
+
+    public Punishment(string title, string description, Sprite cardArt, bool isMinigame, Action<PlayerStats> action, string itemType = "", int quantity = 0, float value = 0f, AudioClip effectSound = null)
     {
         this.title = title;
         this.description = description;
@@ -23,5 +25,6 @@ public class Punishment
         this.itemType = itemType;
         this.quantity = quantity;
         this.value = value;
+        this.effectSound = effectSound;
     }
 }

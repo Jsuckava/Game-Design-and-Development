@@ -59,7 +59,6 @@ public class GameSceneManager : MonoBehaviour
 
         for (int i = 1; i <= 4; i++)
         {
-            // Safety Check: Ensure we have enough spawn points
             if (spawnPoints == null || i > spawnPoints.Length)
             {
                 Debug.LogError($"CRITICAL: Missing Spawn Point for Player {i}. Check 'Spawn Points' array in GameSceneManager Inspector.");
