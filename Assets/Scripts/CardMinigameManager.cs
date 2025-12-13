@@ -11,28 +11,45 @@ public class CardMinigameManager : MonoBehaviour
     public Transform popupContainer;
 
     private List<GameObject> shuffledMinigame;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    void Start()
+    {
+        if (Timer.IsGameOver)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+
+        ShuffleAndAssign();
+    }
+
     void ShuffleAndAssign()
     {
         shuffledMinigame = miniGamePrefabs.OrderBy(x => Random.Range(0f, 1f)).ToList();
 
-        if (cardButtons.Length < miniGamePrefabs.Count)
-        {
-            Debug.LogError("Not enough card buttons for the number of minigame scenes.");
-            return;
-        }
+        int limit = Mathf.Min(cardButtons.Length, shuffledMinigame.Count);
 
-        for (int i = 0; i < cardButtons.Length; i++)
+        for (int i = 0; i < limit; i++)
         {
             cardButtons[i].onClick.RemoveAllListeners();
+            
+            if (Timer.IsGameOver)
+            {
+                cardButtons[i].interactable = false;
+                continue;
+            }
+
             cardButtons[i].interactable = true;
 
             GameObject prefabToLoad = shuffledMinigame[i];
             cardButtons[i].onClick.AddListener(() => ShowMiniGamePopup(prefabToLoad));
         }
     }
+
     void ShowMiniGamePopup(GameObject prefab)
     {
+        if (Timer.IsGameOver) return;
+
         foreach (Button btn in cardButtons)
         {
             btn.interactable = false;
@@ -40,8 +57,10 @@ public class CardMinigameManager : MonoBehaviour
         Instantiate(prefab, popupContainer);
     }
         
-        void ResetCards()
+    void ResetCards()
     {
+        if (Timer.IsGameOver) return;
+
         foreach (Button btn in cardButtons)
         {
             btn.interactable = true;

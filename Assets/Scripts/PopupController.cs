@@ -172,6 +172,13 @@ public class PopupController : MonoBehaviour
     private void OpenPanelWithAnimation(GameObject panel)
     {
         if (panel == null) return;
+
+        if (!gameObject.activeInHierarchy)
+        {
+            panel.SetActive(true);
+            return;
+        }
+
         StopAllCoroutines();
         StartCoroutine(AnimPanelRoutine(panel, true));
     }
@@ -179,6 +186,14 @@ public class PopupController : MonoBehaviour
     private void ClosePanelWithAnimation(GameObject panel, Action onComplete = null)
     {
         if (panel == null) return;
+
+        if (!gameObject.activeInHierarchy)
+        {
+            panel.SetActive(false);
+            if (onComplete != null) onComplete.Invoke();
+            return;
+        }
+
         StopAllCoroutines();
         StartCoroutine(AnimPanelRoutine(panel, false, onComplete));
     }

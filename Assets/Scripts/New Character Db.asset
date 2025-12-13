@@ -16,51 +16,50 @@ MonoBehaviour:
   - characterName: Aiza
     characterSprite: {fileID: 54628408000702781, guid: 11b4f43445b87224587c9fba77358333, type: 3}
     Energy: 30
-    description: When singing, gains +5 energy.
+    description: 50% chance to gain +5 Energy at the start of the turn.
     specialAbilityPower: 4
   - characterName: Boy Tisoy
     characterSprite: {fileID: -1339017565364542167, guid: e81babc0c74293649b807f69af9f0aac, type: 3}
     Energy: 30
-    description: When obtaining a vegetable card, gains +10 energy.
+    description: Gains +10 Energy when obtaining a vegetable card.
     specialAbilityPower: 11
   - characterName: Darna
     characterSprite: {fileID: -3755419160741092120, guid: ce276b04c84e1b045b13b9db5a54bd01, type: 3}
     Energy: 30
-    description: "When shouting \u201CDarna!\u201D, gains +5 energy."
+    description: Gains +10 Energy when obtaining a fruit card.
     specialAbilityPower: 6
   - characterName: Diego
     characterSprite: {fileID: -6377172971238965557, guid: eaf2340223d263247a7b3d032066bf02, type: 3}
     Energy: 30
-    description: When answering a riddle correctly, gains +5 energy.
+    description: Gains +5 Energy when answering a Bugtong riddle correctly.
     specialAbilityPower: 9
   - characterName: Dora
     characterSprite: {fileID: -4286302679308502042, guid: 9d4a1598bb0921a4fb5ac591dfb55013, type: 3}
     Energy: 30
-    description: When answering a riddle correctly, gains +5 energy.
+    description: Gains +5 Energy when answering a Bugtong riddle correctly.
     specialAbilityPower: 9
   - characterName: Aling Nena
     characterSprite: {fileID: 6389715959273610055, guid: fe8f9c55abb52fe44bdbd0fa4f5921ea, type: 3}
     Energy: 30
-    description: When a vegetable card is obtained, +10 energy.
+    description: Gains +10 Energy when obtaining a vegetable card.
     specialAbilityPower: 3
   - characterName: Kardo
     characterSprite: {fileID: -1150860239932744980, guid: 77a638eb44bb84149812917c5af42d99, type: 3}
     Energy: 30
-    description: Loses less energy when building the nipa hut.
+    description: 50% chance to gain +5 Energy at the start of the turn.
     specialAbilityPower: 1
   - characterName: King Kiko
     characterSprite: {fileID: 7317952029988737327, guid: 7cc6cb1fe1ee7b64a8d6fe3ce958abf8, type: 3}
     Energy: 30
-    description: Loses less energy when building the nipa hut.
+    description: Build energy cost is reduced by 50%.
     specialAbilityPower: 2
   - characterName: Manang Yolly
     characterSprite: {fileID: 2746139841833746837, guid: 953070227673bdc46abcf9faec0c9362, type: 3}
     Energy: 35
-    description: Has 2x Healing Powers (cannot heal himself).
+    description: Gains +12 Energy when obtaining a vegetable card.
     specialAbilityPower: 5
   - characterName: Mang Berto
     characterSprite: {fileID: -396586688598746315, guid: f7a2a9f3c4479b84a908dbb765452f2e, type: 3}
     Energy: 30
-    description: "When singing \u201CJeepney\u201D or \u201CJopay\u201D, gains +5
-      energy."
+    description: 50% chance to gain +5 Energy at the start of the turn.
     specialAbilityPower: 8

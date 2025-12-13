@@ -8,7 +8,8 @@ public class PunishmentDeck : MonoBehaviour
     public List<Punishment> deck = new List<Punishment>();
     public DisasterManager disasterManager; 
     public MinigameManager minigameManager;
-    public BahayKuboTracker bahayKuboTracker; // Reference to Tracker
+    public BahayKuboTracker bahayKuboTracker;
+    public AbilityManager abilityManager; 
     
     [Header("Card Art - Disasters")]
     public Sprite elNinoArt, tsunamiArt, tornadoArt, floodArt, trashArt, typhoonArt, volcanicEruptionArt, landslideArt, earthquakeArt, pestArt, leptospirosisArt, sunogArt, covid19Art, tuberculosisArt, hypertensionArt, dengueArt;
@@ -37,6 +38,7 @@ public class PunishmentDeck : MonoBehaviour
         if (disasterManager == null) disasterManager = FindFirstObjectByType<DisasterManager>();
         if (minigameManager == null) minigameManager = FindFirstObjectByType<MinigameManager>();
         if (bahayKuboTracker == null) bahayKuboTracker = FindFirstObjectByType<BahayKuboTracker>();
+        if (abilityManager == null) abilityManager = FindFirstObjectByType<AbilityManager>();
         
         InitializeDeck();
     }
@@ -94,13 +96,11 @@ public class PunishmentDeck : MonoBehaviour
         disasterCards.Add(new Punishment("Volcanic Eruption", "Explosive lava... (All players -3)", volcanicEruptionArt, false, (player) => { disasterManager.ApplyGlobalEnergyLoss(-3f, "Volcanic Eruption"); }, effectSound: soundVolcanic));
         disasterCards.Add(new Punishment("COVID-19", "A contagious virus... (All players -3)", covid19Art, false, (player) => { disasterManager.ApplyGlobalEnergyLoss(-3f, "COVID-19"); }, effectSound: soundCovid));
         
-        // Diseases
         disasterCards.Add(new Punishment("Tuberculosis", "Respiratory disease... (-3 Energy)", tuberculosisArt, false, (player) => { player.ChangeEnergy(-3f); }, effectSound: soundDiseaseGeneric));
         disasterCards.Add(new Punishment("Leptospirosis", "Waterborne disease... (-3 Energy)", leptospirosisArt, false, (player) => { player.ChangeEnergy(-3); }, effectSound: soundDiseaseGeneric));
         disasterCards.Add(new Punishment("Hypertension", "Health condition... (-3 Energy)", hypertensionArt, false, (player) => { player.ChangeEnergy(-3); }, effectSound: soundDiseaseGeneric));
         disasterCards.Add(new Punishment("Dengue", "Mosquito-borne illness... (-3 Energy)", dengueArt, false, (player) => { player.ChangeEnergy(-3); }, effectSound: soundDiseaseGeneric));
 
-        // Materials
         AddMaterialsAndCrops(); 
         AddMinigames();
     }
@@ -112,43 +112,45 @@ public class PunishmentDeck : MonoBehaviour
         materialCards.Add(new Punishment("Hardwood Found!", "You collected 2 Hardwood.", hardwoodArt, false, (player) => { player.ChangeHardwood(2); }, itemType: "Hardwood", quantity: 2, effectSound: soundMaterialFound));
         materialCards.Add(new Punishment("Sawali Panel Found!", "You collected 1 Sawali Panels.", sawaliArt, false, (player) => { player.ChangeSawali(1); }, itemType: "Sawali", quantity: 1, effectSound: soundMaterialFound));
 
-        // +7 Energy
-        cropCards.Add(new Punishment("Talong Harvest!", "+7 Energy", talongArt, false, (player) => { player.ChangeEnergy(7f); }, itemType: "Talong", quantity: 1, value: 7f, effectSound: soundCropHarvest));
-        cropCards.Add(new Punishment("Singkamas Harvest!", "+7 Energy", singkamasArt, false, (player) => { player.ChangeEnergy(7f); }, itemType: "Singkamas", quantity: 1, value: 7f, effectSound: soundCropHarvest));
-        cropCards.Add(new Punishment("Mani Harvest!", "+7 Energy", maniArt, false, (player) => { player.ChangeEnergy(7f); }, itemType: "Mani", quantity: 1, value: 7f, effectSound: soundCropHarvest));
-        cropCards.Add(new Punishment("Kundol Harvest!", "+7 Energy", kundolArt, false, (player) => { player.ChangeEnergy(7f); }, itemType: "Kundol", quantity: 1, value: 7f, effectSound: soundCropHarvest));
-        cropCards.Add(new Punishment("Patola Harvest!", "+7 Energy", patolaArt, false, (player) => { player.ChangeEnergy(7f); }, itemType: "Patola", quantity: 1, value: 7f, effectSound: soundCropHarvest));
-        cropCards.Add(new Punishment("Upo Harvest!", "+7 Energy", upoArt, false, (player) => { player.ChangeEnergy(7f); }, itemType: "Upo", quantity: 1, value: 7f, effectSound: soundCropHarvest));
-        cropCards.Add(new Punishment("Kalabasa Harvest!", "+7 Energy", kalabasaArt, false, (player) => { player.ChangeEnergy(7f); }, itemType: "Kalabasa", quantity: 1, value: 7f, effectSound: soundCropHarvest));
-        cropCards.Add(new Punishment("Labanos Harvest!", "+7 Energy", labanosArt, false, (player) => { player.ChangeEnergy(7f); }, itemType: "Labanos", quantity: 1, value: 7f, effectSound: soundCropHarvest));
-        cropCards.Add(new Punishment("Mustasa Harvest!", "+7 Energy", MustasaArt, false, (player) => { player.ChangeEnergy(7f); }, itemType: "Mustasa", quantity: 1, value: 7f, effectSound: soundCropHarvest));
-        cropCards.Add(new Punishment("Luya Harvest!", "+7 Energy", luyaArt, false, (player) => { player.ChangeEnergy(7f); }, itemType: "Luya", quantity: 1, value: 7f, effectSound: soundCropHarvest));
-        cropCards.Add(new Punishment("Ampalaya Harvest!", "+7 Energy", ampalayaArt, false, (player) => { player.ChangeEnergy(7f); }, itemType: "Ampalaya", quantity: 1, value: 7f, effectSound: soundCropHarvest));
-        cropCards.Add(new Punishment("Sitaw Harvest!", "+7 Energy", sitawArt, false, (player) => { player.ChangeEnergy(7f); }, itemType: "Sitaw", quantity: 1, value: 7f, effectSound: soundCropHarvest));
-        cropCards.Add(new Punishment("Bataw Harvest!", "+7 Energy", batawArt, false, (player) => { player.ChangeEnergy(7f); }, itemType: "Bataw", quantity: 1, value: 7f, effectSound: soundCropHarvest));
-        cropCards.Add(new Punishment("Patani Harvest!", "+7 Energy", pataniArt, false, (player) => { player.ChangeEnergy(7f); }, itemType: "Patani", quantity: 1, value: 7f, effectSound: soundCropHarvest));
-        cropCards.Add(new Punishment("Sigarilyas Harvest!", "+7 Energy", sigarilyasArt, false, (player) => { player.ChangeEnergy(7f); }, itemType: "Sigarilyas", quantity: 1, value: 7f, effectSound: soundCropHarvest));
-        cropCards.Add(new Punishment("Sibuyas Harvest!", "+7 Energy", sibuyasArt, false, (player) => { player.ChangeEnergy(7f); }, itemType: "Sibuyas", quantity: 1, value: 7f, effectSound: soundCropHarvest));
-        cropCards.Add(new Punishment("Bawang Harvest!", "+7 Energy", bawangArt, false, (player) => { player.ChangeEnergy(7f); }, itemType: "Bawang", quantity: 1, value: 7f, effectSound: soundCropHarvest));
-        cropCards.Add(new Punishment("Carrots Harvest!", "+7 Energy", carrotsArt, false, (player) => { player.ChangeEnergy(7f); }, itemType: "Carrots", quantity: 1, value: 7f, effectSound: soundCropHarvest));
-        cropCards.Add(new Punishment("Patatas Harvest!", "+7 Energy", patatasArt, false, (player) => { player.ChangeEnergy(7f); }, itemType: "Patatas", quantity: 1, value: 7f, effectSound: soundCropHarvest));
+        cropCards.Add(new Punishment("Talong Harvest!", "+7 Energy", talongArt, false, (player) => { player.ChangeEnergy(7f); if(abilityManager) abilityManager.CheckCardObtainedBonus(player, "Vegetable"); }, itemType: "Talong", quantity: 1, value: 7f, effectSound: soundCropHarvest));
+        cropCards.Add(new Punishment("Singkamas Harvest!", "+7 Energy", singkamasArt, false, (player) => { player.ChangeEnergy(7f); if(abilityManager) abilityManager.CheckCardObtainedBonus(player, "Vegetable"); }, itemType: "Singkamas", quantity: 1, value: 7f, effectSound: soundCropHarvest));
+        cropCards.Add(new Punishment("Mani Harvest!", "+7 Energy", maniArt, false, (player) => { player.ChangeEnergy(7f); if(abilityManager) abilityManager.CheckCardObtainedBonus(player, "Vegetable"); }, itemType: "Mani", quantity: 1, value: 7f, effectSound: soundCropHarvest));
+        cropCards.Add(new Punishment("Kundol Harvest!", "+7 Energy", kundolArt, false, (player) => { player.ChangeEnergy(7f); if(abilityManager) abilityManager.CheckCardObtainedBonus(player, "Vegetable"); }, itemType: "Kundol", quantity: 1, value: 7f, effectSound: soundCropHarvest));
+        cropCards.Add(new Punishment("Patola Harvest!", "+7 Energy", patolaArt, false, (player) => { player.ChangeEnergy(7f); if(abilityManager) abilityManager.CheckCardObtainedBonus(player, "Vegetable"); }, itemType: "Patola", quantity: 1, value: 7f, effectSound: soundCropHarvest));
+        cropCards.Add(new Punishment("Upo Harvest!", "+7 Energy", upoArt, false, (player) => { player.ChangeEnergy(7f); if(abilityManager) abilityManager.CheckCardObtainedBonus(player, "Vegetable"); }, itemType: "Upo", quantity: 1, value: 7f, effectSound: soundCropHarvest));
+        cropCards.Add(new Punishment("Kalabasa Harvest!", "+7 Energy", kalabasaArt, false, (player) => { player.ChangeEnergy(7f); if(abilityManager) abilityManager.CheckCardObtainedBonus(player, "Vegetable"); }, itemType: "Kalabasa", quantity: 1, value: 7f, effectSound: soundCropHarvest));
+        cropCards.Add(new Punishment("Labanos Harvest!", "+7 Energy", labanosArt, false, (player) => { player.ChangeEnergy(7f); if(abilityManager) abilityManager.CheckCardObtainedBonus(player, "Vegetable"); }, itemType: "Labanos", quantity: 1, value: 7f, effectSound: soundCropHarvest));
+        cropCards.Add(new Punishment("Mustasa Harvest!", "+7 Energy", MustasaArt, false, (player) => { player.ChangeEnergy(7f); if(abilityManager) abilityManager.CheckCardObtainedBonus(player, "Vegetable"); }, itemType: "Mustasa", quantity: 1, value: 7f, effectSound: soundCropHarvest));
+        cropCards.Add(new Punishment("Ampalaya Harvest!", "+7 Energy", ampalayaArt, false, (player) => { player.ChangeEnergy(7f); if(abilityManager) abilityManager.CheckCardObtainedBonus(player, "Vegetable"); }, itemType: "Ampalaya", quantity: 1, value: 7f, effectSound: soundCropHarvest));
+        cropCards.Add(new Punishment("Sitaw Harvest!", "+7 Energy", sitawArt, false, (player) => { player.ChangeEnergy(7f); if(abilityManager) abilityManager.CheckCardObtainedBonus(player, "Vegetable"); }, itemType: "Sitaw", quantity: 1, value: 7f, effectSound: soundCropHarvest));
+        cropCards.Add(new Punishment("Bataw Harvest!", "+7 Energy", batawArt, false, (player) => { player.ChangeEnergy(7f); if(abilityManager) abilityManager.CheckCardObtainedBonus(player, "Vegetable"); }, itemType: "Bataw", quantity: 1, value: 7f, effectSound: soundCropHarvest));
+        cropCards.Add(new Punishment("Patani Harvest!", "+7 Energy", pataniArt, false, (player) => { player.ChangeEnergy(7f); if(abilityManager) abilityManager.CheckCardObtainedBonus(player, "Vegetable"); }, itemType: "Patani", quantity: 1, value: 7f, effectSound: soundCropHarvest));
+        cropCards.Add(new Punishment("Sigarilyas Harvest!", "+7 Energy", sigarilyasArt, false, (player) => { player.ChangeEnergy(7f); if(abilityManager) abilityManager.CheckCardObtainedBonus(player, "Vegetable"); }, itemType: "Sigarilyas", quantity: 1, value: 7f, effectSound: soundCropHarvest));
+        cropCards.Add(new Punishment("Carrots Harvest!", "+7 Energy", carrotsArt, false, (player) => { player.ChangeEnergy(7f); if(abilityManager) abilityManager.CheckCardObtainedBonus(player, "Vegetable"); }, itemType: "Carrots", quantity: 1, value: 7f, effectSound: soundCropHarvest));
+        cropCards.Add(new Punishment("Patatas Harvest!", "+7 Energy", patatasArt, false, (player) => { player.ChangeEnergy(7f); if(abilityManager) abilityManager.CheckCardObtainedBonus(player, "Vegetable"); }, itemType: "Patatas", quantity: 1, value: 7f, effectSound: soundCropHarvest));
 
-        // +5 Energy
-        cropCards.Add(new Punishment("Kamatis Harvest!", "+5 Energy", kamatisArt, false, (player) => { player.ChangeEnergy(5f); }, itemType: "Kamatis", quantity: 1, value: 5f, effectSound: soundCropHarvest));
-        cropCards.Add(new Punishment("Blueberry Harvest!", "+5 Energy", blueberryArt, false, (player) => { player.ChangeEnergy(5f); }, itemType: "Blueberry", quantity: 1, value: 5f, effectSound: soundCropHarvest));
-        cropCards.Add(new Punishment("Mangga Harvest!", "+5 Energy", manggaArt, false, (player) => { player.ChangeEnergy(5f); }, itemType: "Mangga", quantity: 1, value: 5f, effectSound: soundCropHarvest));
-        cropCards.Add(new Punishment("Mansanas Harvest!", "+5 Energy", mansanasArt, false, (player) => { player.ChangeEnergy(5f); }, itemType: "Mansanas", quantity: 1, value: 5f, effectSound: soundCropHarvest));
-        cropCards.Add(new Punishment("Pina Harvest!", "+5 Energy", pinaArt, false, (player) => { player.ChangeEnergy(5f); }, itemType: "Pina", quantity: 1, value: 5f, effectSound: soundCropHarvest));
-        cropCards.Add(new Punishment("Orange Harvest!", "+5 Energy", orangeArt, false, (player) => { player.ChangeEnergy(5f); }, itemType: "Orange", quantity: 1, value: 5f, effectSound: soundCropHarvest));
-        cropCards.Add(new Punishment("Mangosten Harvest!", "+5 Energy", mangostenArt, false, (player) => { player.ChangeEnergy(5f); }, itemType: "Mangosten", quantity: 1, value: 5f, effectSound: soundCropHarvest));
-        cropCards.Add(new Punishment("Lemon Harvest!", "+5 Energy", lemonArt, false, (player) => { player.ChangeEnergy(5f); }, itemType: "Lemon", quantity: 1, value: 5f, effectSound: soundCropHarvest));
-        cropCards.Add(new Punishment("Longan Harvest!", "+5 Energy", longanArt, false, (player) => { player.ChangeEnergy(5f); }, itemType: "Longan", quantity: 1, value: 5f, effectSound: soundCropHarvest));
-        cropCards.Add(new Punishment("Loquat Harvest!", "+5 Energy", loquatArt, false, (player) => { player.ChangeEnergy(5f); }, itemType: "Loquat", quantity: 1, value: 5f, effectSound: soundCropHarvest));
+        cropCards.Add(new Punishment("Luya Harvest!", "+7 Energy", luyaArt, false, (player) => { player.ChangeEnergy(7f); if(abilityManager) abilityManager.CheckCardObtainedBonus(player, "Herb"); }, itemType: "Luya", quantity: 1, value: 7f, effectSound: soundCropHarvest));
+        cropCards.Add(new Punishment("Sibuyas Harvest!", "+7 Energy", sibuyasArt, false, (player) => { player.ChangeEnergy(7f); if(abilityManager) abilityManager.CheckCardObtainedBonus(player, "Herb"); }, itemType: "Sibuyas", quantity: 1, value: 7f, effectSound: soundCropHarvest));
+        cropCards.Add(new Punishment("Bawang Harvest!", "+7 Energy", bawangArt, false, (player) => { player.ChangeEnergy(7f); if(abilityManager) abilityManager.CheckCardObtainedBonus(player, "Herb"); }, itemType: "Bawang", quantity: 1, value: 7f, effectSound: soundCropHarvest));
+
+        cropCards.Add(new Punishment("Kamatis Harvest!", "+5 Energy", kamatisArt, false, (player) => { player.ChangeEnergy(5f); if(abilityManager) abilityManager.CheckCardObtainedBonus(player, "Fruit"); }, itemType: "Kamatis", quantity: 1, value: 5f, effectSound: soundCropHarvest));
+        cropCards.Add(new Punishment("Blueberry Harvest!", "+5 Energy", blueberryArt, false, (player) => { player.ChangeEnergy(5f); if(abilityManager) abilityManager.CheckCardObtainedBonus(player, "Fruit"); }, itemType: "Blueberry", quantity: 1, value: 5f, effectSound: soundCropHarvest));
+        cropCards.Add(new Punishment("Mangga Harvest!", "+5 Energy", manggaArt, false, (player) => { player.ChangeEnergy(5f); if(abilityManager) abilityManager.CheckCardObtainedBonus(player, "Fruit"); }, itemType: "Mangga", quantity: 1, value: 5f, effectSound: soundCropHarvest));
+        cropCards.Add(new Punishment("Mansanas Harvest!", "+5 Energy", mansanasArt, false, (player) => { player.ChangeEnergy(5f); if(abilityManager) abilityManager.CheckCardObtainedBonus(player, "Fruit"); }, itemType: "Mansanas", quantity: 1, value: 5f, effectSound: soundCropHarvest));
+        cropCards.Add(new Punishment("Pina Harvest!", "+5 Energy", pinaArt, false, (player) => { player.ChangeEnergy(5f); if(abilityManager) abilityManager.CheckCardObtainedBonus(player, "Fruit"); }, itemType: "Pina", quantity: 1, value: 5f, effectSound: soundCropHarvest));
+        cropCards.Add(new Punishment("Orange Harvest!", "+5 Energy", orangeArt, false, (player) => { player.ChangeEnergy(5f); if(abilityManager) abilityManager.CheckCardObtainedBonus(player, "Fruit"); }, itemType: "Orange", quantity: 1, value: 5f, effectSound: soundCropHarvest));
+        cropCards.Add(new Punishment("Mangosten Harvest!", "+5 Energy", mangostenArt, false, (player) => { player.ChangeEnergy(5f); if(abilityManager) abilityManager.CheckCardObtainedBonus(player, "Fruit"); }, itemType: "Mangosten", quantity: 1, value: 5f, effectSound: soundCropHarvest));
+        cropCards.Add(new Punishment("Lemon Harvest!", "+5 Energy", lemonArt, false, (player) => { player.ChangeEnergy(5f); if(abilityManager) abilityManager.CheckCardObtainedBonus(player, "Fruit"); }, itemType: "Lemon", quantity: 1, value: 5f, effectSound: soundCropHarvest));
+        cropCards.Add(new Punishment("Longan Harvest!", "+5 Energy", longanArt, false, (player) => { player.ChangeEnergy(5f); if(abilityManager) abilityManager.CheckCardObtainedBonus(player, "Fruit"); }, itemType: "Longan", quantity: 1, value: 5f, effectSound: soundCropHarvest));
+        cropCards.Add(new Punishment("Loquat Harvest!", "+5 Energy", loquatArt, false, (player) => { player.ChangeEnergy(5f); if(abilityManager) abilityManager.CheckCardObtainedBonus(player, "Fruit"); }, itemType: "Loquat", quantity: 1, value: 5f, effectSound: soundCropHarvest));
     }
-
     private void AddMinigames()
     {
-        minigameCards.Add(new Punishment("Bugtong Minigame", "Riddle time!", bugtongArt, true, (player) => { minigameManager.StartBugtongMinigame(player); }, itemType: "Minigame", quantity: 0, effectSound: soundMinigameStart));
+        minigameCards.Add(new Punishment("Bugtong Minigame", "Riddle time!", bugtongArt, true, (player) => { 
+            minigameManager.StartBugtongMinigame(player); 
+            if(abilityManager) abilityManager.CheckMinigameBonus(player, "Bugtong");
+        }, itemType: "Minigame", quantity: 0, effectSound: soundMinigameStart));
+
         minigameCards.Add(new Punishment("TicTacToe Minigame", "Tic-Tac-Toe time!", xoxArt, true, (player) => { minigameManager.StartXoxMinigame(player); }, itemType: "Minigame", quantity: 0, effectSound: soundMinigameStart));
         minigameCards.Add(new Punishment("MatchPick Minigame", "Matching time!", matchaPickerArt, true, (player) => { minigameManager.StartMatchaPickerMinigame(player); }, itemType: "Minigame", quantity: 0, effectSound: soundMinigameStart));
     }

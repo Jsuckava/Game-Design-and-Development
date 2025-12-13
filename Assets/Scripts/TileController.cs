@@ -23,20 +23,18 @@ public class BuildTileController : MonoBehaviour
         UpdateVisuals();
     }
 
-    // --- ADDED FOR TESTING ---
-    // This allows you to toggle checkboxes in the Inspector while playing
-    // and see the house update immediately.
     void Update()
     {
-        if (Application.isEditor) 
+        if (Application.isEditor && !Timer.IsGameOver) 
         {
             UpdateVisuals();
         }
     }
-    // -------------------------
 
     public void StartBuilding(GameObject player)
     {
+        if (Timer.IsGameOver) return;
+
         PlayerStats playerStats = player.GetComponent<PlayerStats>();
         if (playerStats == null) return;
 
@@ -113,18 +111,24 @@ public class BuildTileController : MonoBehaviour
 
     private void ShowSuccessPopup(string part, float energy)
     {
+        if (Timer.IsGameOver) return;
+
         if (popupController != null)
             popupController.ShowSimplePopup("Part Built!", $"You used {energy} energy to build the {part}!");
     }
 
     private void ShowErrorPopup(string message)
     {
+        if (Timer.IsGameOver) return;
+
         if (popupController != null)
             popupController.ShowSimplePopup("Not Enough Materials!", message);
     }
 
     public void UpdateVisuals()
     {
+        // if (Timer.IsGameOver) return;
+
         if (bahayKuboTracker == null) return;
 
         if (haligiObject != null) haligiObject.SetActive(bahayKuboTracker.haligiBuilt);

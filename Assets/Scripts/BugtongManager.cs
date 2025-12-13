@@ -37,6 +37,11 @@ public class BugtongManager : MonoBehaviour
     
     void Start()
     {
+        if (Timer.IsGameOver) 
+        {
+        gameObject.SetActive(false);
+        return;
+        }
         minigameManager = FindFirstObjectByType<MinigameManager>();
         if (minigameManager == null)
         {

@@ -8,7 +8,6 @@ public class AbilityManager : MonoBehaviour
 
     void Start()
     {
-        // announceText.gameObject.SetActive(false);
     }
 
     private void ShowAnnouncement(string message)
@@ -44,15 +43,29 @@ public class AbilityManager : MonoBehaviour
 
     public void CheckCardObtainedBonus(PlayerStats player, string cardType)
     {
-        if (player.ability == AbilityType.VegetableVendor)
+        if (player.ability == AbilityType.VegetableVendor && cardType == "Vegetable")
         {
             float bonus = 10f;
             player.ChangeEnergy(bonus);
             string message = $"{player.playerName} got vegetable! passive activated +{bonus} energy.";
             ShowAnnouncement(message);
         }
-    }
 
+        if (player.ability == AbilityType.FruitVendor && cardType == "Fruit")
+        {
+            float bonus = 10f;
+            player.ChangeEnergy(bonus);
+            string message = $"{player.playerName} got fruit! passive activated +{bonus} energy.";
+            ShowAnnouncement(message);
+        }
+    if (player.ability == AbilityType.Herbalist && cardType == "Herb")
+        {
+            float bonus = 12f;
+            player.ChangeEnergy(bonus);
+            string message = $"{player.playerName} found herbs! +{bonus} Energy (Herbalist)";
+            ShowAnnouncement(message);
+        }
+}
     public float GetBuildEnergyCostReduction(PlayerStats player)
     {
         if (player.ability == AbilityType.Carpenter)
@@ -73,9 +86,8 @@ public class AbilityManager : MonoBehaviour
             {
                 float bonus = 5f;
                 player.ChangeEnergy(bonus);
-                string message = $"{player.playerName} is singing! +{bonus} Energy.";
+                string message = $"{player.playerName} activated passive! +{bonus} Energy.";
                 ShowAnnouncement(message);
-
             }
         }
     }

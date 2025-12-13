@@ -19,6 +19,13 @@ public class MinigameManager : MonoBehaviour
 
     void Start()
     {
+        // 1. Safety Check on Start
+        if (Timer.IsGameOver) 
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+
         turnManager = FindFirstObjectByType<TurnManager>();
         popupController = FindFirstObjectByType<PopupController>();
         abilityManager = FindAnyObjectByType<AbilityManager>();
@@ -26,6 +33,8 @@ public class MinigameManager : MonoBehaviour
 
     public void StartXoxMinigame(PlayerStats player)
     {
+        if (Timer.IsGameOver) return;
+
         popupContainer.gameObject.SetActive(true);
         currentPlayerStats = player;
         Instantiate(xoxMinigamePrefab, popupContainer);
@@ -34,6 +43,8 @@ public class MinigameManager : MonoBehaviour
 
     public void StartBugtongMinigame(PlayerStats player)
     {
+        if (Timer.IsGameOver) return;
+
         popupContainer.gameObject.SetActive(true);
         currentPlayerStats = player;
         Instantiate(bugtongMinigamePrefab, popupContainer);
@@ -42,6 +53,8 @@ public class MinigameManager : MonoBehaviour
 
     public void StartMatchaPickerMinigame(PlayerStats player)
     {
+        if (Timer.IsGameOver) return;
+
         popupContainer.gameObject.SetActive(true);
         currentPlayerStats = player;
         Instantiate(matchaPickerMinigamePrefab, popupContainer);
@@ -50,6 +63,16 @@ public class MinigameManager : MonoBehaviour
 
     public void OnMinigameCompleted(bool isWin)
     {
+        if (Timer.IsGameOver)
+        {
+            if (popupContainer.childCount > 0)
+            {
+                Destroy(popupContainer.GetChild(0).gameObject);
+            }
+            popupContainer.gameObject.SetActive(false);
+            return; 
+        }
+
         if (isWin)
         {
             Debug.Log("Player won");
@@ -66,23 +89,19 @@ public class MinigameManager : MonoBehaviour
         
         popupContainer.gameObject.SetActive(false);
 
-        // 2. RESET AUDIO (Important Fix)
         if (popupController != null)
         {
-            // Stop the looping Minigame music ("Walen - Gameboy")
             if (popupController.uiAudioSource != null)
             {
                 popupController.uiAudioSource.Stop();
             }
 
-            // Resume the Main Background Music immediately
             if (popupController.mainBgMusic != null)
             {
                 popupController.mainBgMusic.UnPause();
             }
         }
 
-        // 3. Handle Win/Loss Logic
         if (popupController != null && currentPlayerStats != null)
         {
             if (isWin)
@@ -93,7 +112,6 @@ public class MinigameManager : MonoBehaviour
             else
             {
                 Debug.Log("You Lose.");
-                // This will show the punishment choice and play the sad/bad sound
                 popupController.ShowPunishmentChoice("Aguy! ", currentPlayerStats);
             }
         }

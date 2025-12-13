@@ -40,7 +40,6 @@ public class PlayerMovement : MonoBehaviour
             if (btn != null) buildHudButton = btn.GetComponent<Button>();
         }
 
-        // Always hide at start
         if (buildHudButton != null) 
             buildHudButton.gameObject.SetActive(false);
     }
