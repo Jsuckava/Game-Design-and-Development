@@ -1,12 +1,8 @@
-using NUnit.Framework;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.Hierarchy;
-using UnityEngine.WSA;
 
 public class MatchaPickHandler : MonoBehaviour
 {
