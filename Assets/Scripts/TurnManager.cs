@@ -15,6 +15,8 @@ public class TurnManager : MonoBehaviour
     public TextMeshProUGUI turnStatusText;
     public Button mainRollButton; 
     public TextMeshProUGUI mainDiceResultText; 
+    
+    public Button mainBuildButton; 
 
     [Header("Morality UI")]
     public Slider moralitySlider;
@@ -36,10 +38,20 @@ public class TurnManager : MonoBehaviour
     void Start()
     {
         abilityManager = FindFirstObjectByType<AbilityManager>();
+        // 1. Auto-find Roll Button
         if (mainRollButton == null)
         {
-            mainRollButton = FindFirstObjectByType<Button>();
+            GameObject rollObj = GameObject.Find("RollButton"); 
+            if (rollObj != null) mainRollButton = rollObj.GetComponent<Button>();
+            else mainRollButton = FindFirstObjectByType<Button>();
         }
+
+        if (mainBuildButton == null)
+        {
+            GameObject buildObj = GameObject.Find("BuildButton");
+            if (buildObj != null) mainBuildButton = buildObj.GetComponent<Button>();
+        }
+
         if (mainDiceResultText == null)
         {
             mainDiceResultText = GameObject.Find("DiceResultText")?.GetComponent<TextMeshProUGUI>();
@@ -71,7 +83,7 @@ public class TurnManager : MonoBehaviour
         {
             if (player != null)
             {
-                player.AssignUI(mainRollButton, mainDiceResultText);
+                player.AssignUI(mainRollButton, mainDiceResultText, mainBuildButton);
             }
         }
 
@@ -92,6 +104,19 @@ public class TurnManager : MonoBehaviour
         {
             Debug.Log("Game Over: No active players left to start a turn.");
             return;
+        }
+
+        if (currentPlayer.energy <= 0)
+        {
+            Debug.Log($"{currentPlayer.playerName} has 0 Energy and cannot roll! Eliminating player...");
+            
+            if (turnStatusText != null)
+            {
+                turnStatusText.text = $"{currentPlayer.playerName} collapsed from exhaustion!";
+            }
+
+            EliminatePlayer(currentPlayer); 
+            return; 
         }
 
         Debug.Log($"Starting turn for {currentPlayer.playerName} (Player {currentPlayerIndex + 1})");
@@ -144,9 +169,16 @@ public class TurnManager : MonoBehaviour
     {
         if (currentPlayerIndex >= 0 && currentPlayerIndex < players.Count)
         {
+            if (activePlayers[currentPlayerIndex].energy <= 0)
+            {
+                EliminatePlayer(activePlayers[currentPlayerIndex]);
+                return;
+            }
+
             players[currentPlayerIndex].SetRollButtonInteractable(true);
         }
     }
+
     public void ChangeCommunityMorale(int amount)
     {
         communityMorale += amount;
@@ -168,6 +200,8 @@ public class TurnManager : MonoBehaviour
         PlayerMovement eliminatedMovement = eliminatedPlayer.GetComponent<PlayerMovement>();
         if (eliminatedMovement != null)
         {
+            eliminatedMovement.SetRollButtonInteractable(false);
+            eliminatedMovement.RemoveButtonListener();
             players.Remove(eliminatedMovement);
         }
         
@@ -184,10 +218,12 @@ public class TurnManager : MonoBehaviour
         {
             currentPlayerIndex--;
         }
+        
         if (currentPlayerIndex >= activePlayers.Count)
         {
             currentPlayerIndex = 0;
         }
+
         StartTurn(activePlayers[currentPlayerIndex]);
     }
 

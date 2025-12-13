@@ -12,7 +12,6 @@ public class MultiPlayerSelectionOfPlayerManager : MonoBehaviour
     public CharacterManager characterManager;
     public TextMeshProUGUI playerTurnText;
     
-    // IMPORTANT: Check your Inspector! Size must be 4, and Element 3 must be assigned!
     public TextMeshProUGUI[] confirmedNameTextSlots = new TextMeshProUGUI[4];
     
     public Button startGameButton; 

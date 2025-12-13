@@ -20,7 +20,14 @@ public class PlayerStats : MonoBehaviour
     private int maxMorality = 50;
     
     public float maxEnergy = 30f;
-    public float currentEnergy;
+   
+    public float currentEnergy; 
+    public float energy 
+    {
+        get { return currentEnergy; }
+        set { currentEnergy = value; }
+    }
+
     private float minEnergy = 0f;
     public int bamboo = 0; 
     public int nipaLeaves = 0;
@@ -46,7 +53,9 @@ public class PlayerStats : MonoBehaviour
         playerName = name;
         assignedCharacterName = charName;
         maxEnergy = maxEnergyVal;
+        
         currentEnergy = maxEnergy; 
+        
         ability = abilityType;
         characterSprite = sprite; 
         playerID = playerNum; 

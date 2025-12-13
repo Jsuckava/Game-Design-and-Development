@@ -66,6 +66,23 @@ public class MinigameManager : MonoBehaviour
         
         popupContainer.gameObject.SetActive(false);
 
+        // 2. RESET AUDIO (Important Fix)
+        if (popupController != null)
+        {
+            // Stop the looping Minigame music ("Walen - Gameboy")
+            if (popupController.uiAudioSource != null)
+            {
+                popupController.uiAudioSource.Stop();
+            }
+
+            // Resume the Main Background Music immediately
+            if (popupController.mainBgMusic != null)
+            {
+                popupController.mainBgMusic.UnPause();
+            }
+        }
+
+        // 3. Handle Win/Loss Logic
         if (popupController != null && currentPlayerStats != null)
         {
             if (isWin)
@@ -76,12 +93,13 @@ public class MinigameManager : MonoBehaviour
             else
             {
                 Debug.Log("You Lose.");
-                popupController.ShowPunishmentChoice("Aguy! ",currentPlayerStats);
+                // This will show the punishment choice and play the sad/bad sound
+                popupController.ShowPunishmentChoice("Aguy! ", currentPlayerStats);
             }
         }
         else
         {
-             turnManager.EndTurn();
+            turnManager.EndTurn();
         }
 
         currentPlayerStats = null;
