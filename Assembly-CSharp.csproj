@@ -69,11 +69,13 @@
     <Compile Include="Assets\Scripts\InventorySlot.cs" />
     <Compile Include="Assets\Scripts\LivesUI.cs" />
     <Compile Include="Assets\MIMG\Scripting\Game\MIMG_button_game.cs" />
+    <Compile Include="Assets\Scripts\IntroController.cs" />
     <Compile Include="Assets\Scripts\TileController.cs" />
     <Compile Include="Assets\Scripts\PopupController.cs" />
     <Compile Include="Assets\Scripts\AbilityManager.cs" />
     <Compile Include="Assets\Scripts\UIAnimation.cs" />
     <Compile Include="Assets\Scripts\CharacterDb.cs" />
+    <Compile Include="Assets\Scripts\ButtonHandler.cs" />
     <Compile Include="Assets\Scripts\SoundsManager.cs" />
     <Compile Include="Assets\Scripts\ObjectMoverFor2ndPlayer.cs" />
     <Compile Include="Assets\Scripts\PlayerStats.cs" />
