@@ -109,7 +109,7 @@ public class Timer : MonoBehaviour
             {
                 if (hasWon)
                 {
-                    gameOverText.text = "Congratulations you beat the game! You have successfully built the Bahay Kubo!";
+                    gameOverText.text = "Congrats mga ya, nakabuo na kayo ng bahay kubo!";
                     gameOverText.fontSize = 40;
                 }
                 else

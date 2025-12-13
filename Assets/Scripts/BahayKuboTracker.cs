@@ -113,7 +113,9 @@ public class BahayKuboTracker : MonoBehaviour
     public string AttemptBuild(PlayerStats player)
     {
         RefreshUI();
-        if (haligiBuilt && sahigBuilt && paderBuilt && bubongBuilt) return "Complete";
+        bool buildSuccess = false;
+        string result = "";
+        if (haligiBuilt && sahigBuilt && paderBuilt && bubongBuilt) result = "Complete";
 
         // 1. CALCULATE ENERGY COST WITH DISCOUNT
         float finalEnergyCost = build_energy_cost;
@@ -132,8 +134,7 @@ public class BahayKuboTracker : MonoBehaviour
         }
 
         // 3. ATTEMPT TO BUILD (Deduct Materials AND Energy)
-        bool buildSuccess = false;
-        string result = "";
+        
 
         if (!haligiBuilt)
         {
