@@ -70,6 +70,12 @@ public class PlayerMovement : MonoBehaviour
         {
             diceResultText.text = "You rolled a " + diceRoll;
         }
+
+        PlayerStats stats = GetComponent<PlayerStats>();
+        if (stats != null)
+        {
+            stats.hasRolledDice = true;
+        }
         
         SetRollButtonInteractable(false);
         StartCoroutine(MovePlayer(diceRoll));

@@ -67,6 +67,5 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "Game-Design-and-Development.slnx",
-    "FSharp.suggestGitignore": false
+    "dotnet.defaultSolution": "Game-Design-and-Development.slnx"
 }

@@ -65,6 +65,8 @@ public class AbilityManager : MonoBehaviour
 
     public void CheckStartOfTurnPassive(PlayerStats player)
     {
+        if (!player.hasRolledDice) return;
+        
         if (Random.value > 0.5f)
         {
             if (player.ability == AbilityType.Musician || player.ability == AbilityType.Driver)

@@ -6,8 +6,10 @@ public class PlayerStats : MonoBehaviour
 {
     public SpriteRenderer playerVisual; 
     public TextMeshProUGUI myStatDisplay; 
-    private int playerID; 
+    private int playerID;
 
+    public bool hasRolledDice = false;
+    
     public string playerName;
     public string assignedCharacterName; 
     public Sprite characterSprite;
